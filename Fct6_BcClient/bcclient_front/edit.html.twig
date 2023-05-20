@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC
+    Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Bcclient edit</h1>
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <button class="btn btn-success btn-block"><i class="fa fa-edit"></i> Modifier</button>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+
+    <div class="row">
+        <div class="col-md-4">    <a href="{{ path('bcclient_index') }}" class=""><i class="fa fa-arrow-left"></i> Back to the list</a>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">{{ form_start(delete_form) }}
+            <button class="pull-right" type="submit"><i class="fa fa-trash"></i> Supprimer</button>
+            {{ form_end(delete_form) }}</div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Bcclients list  - 30 jours restants </h1>
+
+    <table class="table table-detail">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Date</th>
+            <th>Nbjrs</th>
+            <th>Nbjrsr</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bcclient in bcclients %}
+            <tr>
+                <td><a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">{{ bcclient.id }}</a></td>
+                <td>{{ bcclient.code }}</td>
+                <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ bcclient.nbJrs }}</td>
+                <td>{{ bcclient.nbJrsR }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('bcclient_new') }}">new bcclient</a>
+        </li>
+    </ul>
+{% endblock %}

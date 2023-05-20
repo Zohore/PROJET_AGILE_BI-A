@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC
+    Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1 class="text-center">Bcclients list</h1>
+    {% if count ==0 %}
+    {% else %}
+        <center>
+            <a class="text-center text-warning" href="{{ path('bcclient_sans_document') }}"><i
+                        class="fa fa-warning"></i> {{ count }} BC clients sans document</a><br>
+            <a class="text-center text-warning" href="{{ path('bcclient_index_expired') }}"><i
+                        class="fa fa-warning"></i> {{ bcclients_expired | length }} BC clients expirés</a>
+
+        </center>
+
+    {% endif %}
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+
+            <a href="{{ path('bcclient_new') }}" class="btn btn-white btn-primary btn-block"><i
+                        class="fa fa-plus-circle"></i> Ajouteur un BC Client</a>
+        </div>
+    </div>
+    <hr>
+
+    <table class="table table-striped table-bordered table-hover dataTable no-footer text-center">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Date</th>
+            <th>Consultant</th>
+            <th>Client</th>
+            <th>Nbjrs</th>
+            <th>Nbjrsr</th>
+            <th>N° Contrat</th>
+            <th>Application</th>
+            <th>Avenant</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bcclient in bcclients %}
+            <tr>
+                <td><a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">{{ bcclient.id }}</a></td>
+                <td>{{ bcclient.code }}</td>
+                <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ bcclient.consultant }}</td>
+                <td>{{ bcclient.client }}</td>
+                <td>{{ bcclient.nbJrs }}</td>
+                <td>{{ bcclient.nbJrsR }}</td>
+                <td>{{ bcclient.ncontrat }}</td>
+                <td>{{ bcclient.application }}</td>
+                <td>{{ bcclient.avenant }}</td>
+                <td class="center">
+                    <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}"><i
+                                class="icon-menu fa fa-search-plus blue bigger-140"></i></a>
+                    <a href="{{ path('bcclient_log', { 'id': bcclient.id }) }}"><i
+                                class="icon-menu fa fa-history dark-10 bigger-140"></i></a>
+
+
+                    <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}"><i
+                                class="icon-menu fa fa-edit orange bigger-140"></i></a>
+                    {% if bcclient.expired == 0 %}
+                        <a href="{{ path('bcclient_expired', { 'id': bcclient.id }) }}" title="Expirer"><i
+                                    class="icon-menu fa fa-toggle-on green bigger-140"></i></a>
+                    {% endif %}
+                    {% if bcclient.expired == 1 %}
+                        <a href="{{ path('bcclient_expired', { 'id': bcclient.id }) }}" title="Reactiver"><i
+                                    class="icon-menu fa fa-toggle-off red bigger-140"></i></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+
+    <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+    {# <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script> #}
+    <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
+
+    <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+    <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.dataTable').DataTable(
+                {
+
+                    dom: 'lBfrtip',
+                    pageLength: 20,
+                    bLengthChange: true,
+                    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    buttons: [
+                        'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                    ]
+                }
+            );
+
+        });
+    </script>
+
+
+{% endblock %}
