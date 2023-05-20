@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Detailvirement</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ detailvirement.id }}</td>
+        </tr>
+        <tr>
+            <th>Priorite</th>
+            <td>{{ detailvirement.priorite }}</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td>{{ detailvirement.total }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('detailvirement_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('detailvirement_edit', { 'id': detailvirement.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
