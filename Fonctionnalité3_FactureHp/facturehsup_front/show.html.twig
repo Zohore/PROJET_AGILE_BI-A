@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Facturehsup</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ factureHsup.id }}</td>
+            </tr>
+            <tr>
+                <th>Nbjour</th>
+                <td>{{ factureHsup.nbjour }}</td>
+            </tr>
+            <tr>
+                <th>Nbheure</th>
+                <td>{{ factureHsup.nbheure }}</td>
+            </tr>
+            <tr>
+                <th>Totalht</th>
+                <td>{{ factureHsup.totalHT }}</td>
+            </tr>
+            <tr>
+                <th>Totalttc</th>
+                <td>{{ factureHsup.totalTTC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('facturehsup_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('facturehsup_edit', { 'id': factureHsup.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
