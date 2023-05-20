@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Bc fournisseur {% endblock %}{% block menu %}  <a href="{{ path('bcfournisseur_index') }}">Bc
+    fournisseur</a>   {% endblock %}
+{% block menu_active %}    Ajouter {% endblock %}
+{% block content %}
+
+    <div class="col-md-12">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Création BC Fournisseur</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        {{ form_start(form) }}
+
+                        <div class="col-md-6">
+                            {{ form_row(form.date) }}
+                            {{ form_row(form.fournisseur) }}
+                            {{ form_row(form.consultant) }}
+                            {{ form_row(form.mission) }}
+                            {{ form_row(form.facture) }}
+                            {{ form_row(form.projet) }}
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <div class="form-group"><label for="appbundle_bcfournisseur_nbjours">Nbjours</label>
+                                <input type="number" id="appbundle_bcfournisseur_nbjours"
+                                       name="appbundle_bcfournisseur[nbjours]" class="form-control" step="0.5">
+                            </div>
+                            {{ form_row(form.mois) }}
+                            {{ form_row(form.year) }}
+                            {{ form_row(form.achatHT) }}
+                            {{ form_row(form.taxe) }}
+                            {{ form_row(form.achatTTC) }}
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions center">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            Submit
+                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                        <a href="{{ path('bcfournisseur_index') }}" class="pull-left">Back to the list</a>
+                    </div>
+                    {{ form_widget(form._token) }}
+
+                    {{ form_end(form , {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script type="text/javascript">
+
+
+        $('#appbundle_bcfournisseur_nbjours').blur(function () {
+            var t = $(this).val();
+            var url = Routing.generate('route_bc_getinfo');
+            var project = $('#appbundle_bcfournisseur_projet').val();
+            var mission = $('#appbundle_bcfournisseur_mission').val();
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    nbjour: t,
+                    id_mission: mission,
+                    id_project: project
+                },
+                beforeSend: function () {
+                    console.log('im getting data');
+                },
+                success: function (response) {
+
+
+                    if (data = response.data) {
+                        $('.info_bc').remove();
+
+                        console.log(data.nbjour_r_maj);
+                        if (data.nbjour_r_maj >= 0) {
+
+                            $(':input[type="submit"]').prop('disabled', false);
+                            $('#appbundle_bcfournisseur_achatHT').val(response.data.achatHT);
+                            $('#appbundle_bcfournisseur_taxe').val(response.data.taxe);
+                            $('#appbundle_bcfournisseur_achatTTC').val(response.data.achatTTC);
+                            $('#appbundle_bcfournisseur_facture').val(response.data.facture_id);
+                            $('#appbundle_bcfournisseur_nbjours').after('<p class="info_bc text-success">' + data.nbjour_r + ' jours restants</p>');
+                            $('#appbundle_bcfournisseur_nbjours').after('<p class="info_bc text-success">' + data.nbjour_r_maj + ' jours restants ( entrée de : ' + data.nbjour + ')</p>');
+                        } else {
+                            $(':input[type="submit"]').prop('disabled', true);
+                            $('#appbundle_bcfournisseur_nbjours').after('<p class="info_bc text-danger">' + data.nbjour_r + ' jours restants</p>');
+                            $('#appbundle_bcfournisseur_nbjours').after('<p class="info_bc text-danger">' + data.nbjour_r_maj + ' jours restants ( entrée de : ' + data.nbjour + ')</p>');
+                            swal({
+                                title: "Alert",
+                                text: "nombre de jours du bc " + data.bcclient + " insuffusant !",
+                                icon: "error",
+                                button: "Exit",
+                            });
+                        }
+                    }
+                },
+                error: function (error) {
+
+
+                }
+
+
+            });
+
+
+        });
+        //ajax
+        var url = Routing.generate('route_bc_getinfo')
+        $.ajax({
+
+            url: url,
+            type: 'POST',
+            date: {},
+            dataType: 'json',
+            beforeSend: {},
+            success: function (data) {
+
+            },
+            error: {}
+
+        })
+        //end_ajax
+    </script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | BC fournisseur {% endblock %}{% block menu %}
+    <a
+            href="{{ path('bcfournisseur_index') }}">BC
+        fournisseur</a>   {% endblock %}   {% block menu_active %}    Show {% endblock %}{% block content1 %}
+    <h1>Bcfournisseur</h1>
+
+    <table class="table table-detail">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ bcfournisseur.id }}</td>
+        </tr>
+        <tr>
+            <th>Achatht</th>
+            <td>{{ bcfournisseur.achatHT }}</td>
+        </tr>
+        <tr>
+            <th>Achatttc</th>
+            <td>{{ bcfournisseur.achatTTC }}</td>
+        </tr>
+        <tr>
+            <th>Taxe</th>
+            <td>{{ bcfournisseur.taxe }}</td>
+        </tr>
+
+
+        <tr>
+            <th>Date</th>
+            <td>{% if bcfournisseur.date %}{{ bcfournisseur.date|date('Y-m-d') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Documentname</th>
+            <td>{{ bcfournisseur.documentName }}</td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{% if bcfournisseur.updatedAt %}{{ bcfournisseur.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{% if bcfournisseur.createdAt %}{{ bcfournisseur.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <ul>
+            <li>
+                <a href="{{ path('bcfournisseur_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('bcfournisseur_edit', { 'id': bcfournisseur.id }) }}">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+
+    {% endif %}
+{% endblock %}

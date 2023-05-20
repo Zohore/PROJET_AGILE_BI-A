@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | BC fournisseur {% endblock %}{% block menu %}  <a href="{{ path('bcfournisseur_index') }}">BC
+    fournisseur</a>   {% endblock %}   {% block menu_active %}    Modifier {% endblock %}{% block content %}
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Liste des BC fournisseur :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    {{ form_start(edit_form) }}
+                    {{ form_widget(edit_form) }}
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-white btn-warning btn-block"><i class="fa fa-edit"></i>
+                                Modifier
+                            </button>
+                        </div>
+                    </div>
+                    {{ form_end(edit_form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <a href="{{ path('bcfournisseur_index') }}"><i class="fa fa-caret-left"></i> Back to the list</a>
+    <div class="pull-right">
+        {{ form_start(delete_form) }}
+        <button class="" type="submit">
+            <i class="fa fa-trash"></i> Supprimer
+        </button>
+
+        {{ form_end(delete_form) }}
+    </div>
+
+
+{% endblock %}
