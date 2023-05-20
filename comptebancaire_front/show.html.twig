@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Comptebancaire</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ comptebancaire.id }}</td>
+            </tr>
+            <tr>
+                <th>Rib</th>
+                <td>{{ comptebancaire.rib }}</td>
+            </tr>
+            <tr>
+                <th>Banque</th>
+                <td>{{ comptebancaire.banque }}</td>
+            </tr>
+            <tr>
+                <th>Agence</th>
+                <td>{{ comptebancaire.agence }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ comptebancaire.label }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('comptebancaire_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('comptebancaire_edit', { 'id': comptebancaire.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

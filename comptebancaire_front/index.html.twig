@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Compte bancaire {% endblock %}{% block menu %}  <a href="{{ path('comptebancaire_index') }}">Compte bancaire</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+
+    <h1>Liste des Compte bancaires</h1>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <a href="{{ path('comptebancaire_new') }}" class="btn btn-white btn-primary btn-block"><i
+                        class="fa fa-plus-circle"></i> Ajouteur un compte bancaire</a>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-striped table-bordered table-hover dataTable no-footer text-left">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Rib</th>
+            <th>Banque</th>
+            <th>Agence</th>
+            <th>Label</th>
+            <th>Code</th>
+            <th>Adresse</th>
+            <th>Pays</th>
+            <th>Numéro de compte</th>
+            <th>Swift Code</th>
+            <th>Code Rib</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comptebancaire in comptebancaires %}
+            <tr>
+                <td><a href="{{ path('comptebancaire_show', { 'id': comptebancaire.id }) }}">{{ comptebancaire.id }}</a>
+                </td>
+                <td>{{ comptebancaire.rib }}</td>
+                <td>{{ comptebancaire.banque }}</td>
+                <td>{{ comptebancaire.agence }}</td>
+                <td>{{ comptebancaire.label }}</td>
+                <td>{{ comptebancaire.code }}</td>
+                <td>{{ comptebancaire.adresse }}</td>
+                <td>{{ comptebancaire.pays }}</td>
+                <td>{{ comptebancaire.numeroCompte }}</td>
+                <td>{{ comptebancaire.swiftCode }}</td>
+                <td>{{ comptebancaire.codeRib }}</td>
+                <td>
+
+                    <a href="{{ path('comptebancaire_show', { 'id': comptebancaire.id }) }}"><i class="fa fa-search-plus bigger-140"></i></a>
+
+
+                    <a href="{{ path('comptebancaire_edit', { 'id': comptebancaire.id }) }}"><i class="fa fa-edit bigger-140 orange"></i></a>
+
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
