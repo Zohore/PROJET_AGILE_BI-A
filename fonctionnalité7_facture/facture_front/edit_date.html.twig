@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Modifier la facture :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="#" data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            {{ form_start(edit_form) }}
+
+                            {{ form_widget(edit_form) }}
+
+                            <center>
+                                <button class="btn btn-white btn-success " type="submit"><i class="fa fa-save"></i>
+                                    Enregister
+                                </button>
+                            </center>
+
+
+                            {{ form_end(edit_form) }}
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

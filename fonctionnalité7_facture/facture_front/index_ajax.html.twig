@@ -1,0 +1,850 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | facture {% endblock %}
+{% block menu %}
+    <a href="{{ path('facture_index') }}">facture</a>
+
+{% endblock %}
+{% block menu_active %}    Liste
+{% endblock %}
+{% block content1 %}
+
+    {% if nb_non_factured_missions is not null and nb_non_factured_missions > 0 %}
+        <div class="alert alert-warning text-center">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
+
+
+            <a href="{{ path('mission_sans_facture') }}" class="text-warning">
+
+                <strong>
+                    <i class="ace-icon fa fa-warning"></i>
+                    {{ nb_non_factured_missions }}
+                </strong>
+
+                Missions sans facture pour le mois <b>{{ mois }}</b> <span class="bigger-110 no-text-shadow"></span>
+            </a>
+            <br>
+
+            <a href="{{ path('bcclient_alert') }}" class="text-warning">
+                <strong>
+                    <i class="ace-icon fa fa-warning"></i>
+                    {{ bcclients | length }}
+                </strong>
+
+                BC clients avec moins de 20 jours restants
+            </a>
+        </div>
+    {% endif %}
+
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Liste des Factures :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="#" data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="clearfix">
+                                <div class="pull-right tableTools-container">
+                                </div>
+                            </div>
+                            <div class="table-header">
+                                Factures : <a href="{{ path('facture_new') }}"
+                                              class="btn btn-white btn-default pull-right"
+                                              style="margin-top: 2px;margin-right: 3px;">
+                                    <i class="fa fa-plus"></i>
+                                    Nouvelle Facture
+                                </a>
+
+                            </div>
+
+                            <!-- div.table-responsive -->
+                            <div class="alert alert-block alert-danger text-center">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="ace-icon fa fa-times"></i>
+                                </button>
+
+                                <p>
+                                    <strong>
+                                        <i class="ace-icon fa fa-warning"></i>
+                                        {{ facture_sans_timesheet | length }} Facture(s) </strong>
+                                    sans Timesheet merci de les uploader !
+                                </p>
+
+                                <p>
+                                    <a class="btn btn-danger" href="{{ path('facture_sans_timesheet') }}">
+                                        <i class="fa fa-list-alt"></i> Liste
+                                    </a>
+                                </p>
+                            </div>
+
+                            <!-- div.dataTables_borderWrap -->
+                            <div>
+                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                    <div class="preloader"></div>
+                                    <table id="dynamic-table"
+                                           class="table table-striped table-bordered table-hover dataTable no-footer text-left"
+                                           role="grid" aria-describedby="dynamic-table_info">
+                                        <thead style="font-weight: bold;">
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1" style="color: #707070;"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Numéro
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1" style="color: #707070;"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Projet
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Client
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                consultant
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                mois
+                                            </th>
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">Nb jours
+                                            </th>
+
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                date
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Total Ht
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Total TTC
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Etat
+                                            </th>
+
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Date Paiement
+                                            </th>
+
+
+                                            <th class="hidden-480 sorting" rowspan="1" colspan="1" aria-label="">devise
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Date Echeance
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Total DH
+                                            </th>
+
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {#
+                                        {% for facture in factures %}
+
+                                            <tr role="row" class="odd text-center">
+                                                <td>
+
+
+                                                    {{ facture.numero }}
+
+
+                                                </td>
+                                                <td>
+
+
+                                                    {{ facture.projet }}
+
+
+                                                </td>
+
+
+                                                <td>
+                                                    {% if facture.client is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ facture.client.nom }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+
+                                                    {% if facture.consultant is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ facture.consultant }}
+
+
+                                                    {% endif %}
+
+
+                                                </td>
+
+
+                                                <td>
+                                                    {% if facture.mois is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ facture.mois }}-{{ facture.year }}
+
+
+
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>
+                                                    {% if facture.nbjour is null %}
+
+
+                                                    {% else %}
+
+                                                        {{ facture.nbjour }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if facture.date is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ facture.date|date('d/m/Y') }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if facture.totalHT is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ facture.totalHT }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td>
+                                                    {% if facture.totalTTC is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ facture.totalTTC }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if facture.etat is null %}
+                                                        --
+
+                                                    {% else %}
+                                                        {% if facture.etat == 'non payé' %}
+                                                            <span class="label label-warning arrowed arrowed-right"> {{ facture.etat }}</span>
+                                                        {% else %}
+                                                            <span class="label label-success arrowed arrowed-right"> {{ facture.etat }}</span>
+                                                        {% endif %}
+
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if facture.datepaiement is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ facture.datepaiement|date('d/m/Y') }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td>
+                                                    {% if facture.mission is null %}
+                                                        DH
+
+                                                    {% else %}
+
+                                                        {{ facture.mission.devise }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if facture.client is null %}
+                                                        DH
+
+                                                    {% else %}
+                                        #}{# {{ facture.client.echeance }} #}{#
+                                        {% set modify = facture.client.echeance %}
+                                        {% set date =  facture.date |date("m/d/Y") %}
+                                        {% if modify is not null %}
+                                            {{ date|date_modify("+" ~ modify ~ " day")|date("d/m/Y") }}
+
+
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+
+
+                                <td>
+                                    <div class="hidden-sm hidden-xs action-buttons">
+                                        {% if is_granted('ROLE_ADMIN') %}
+
+
+
+
+                                            {% if facture.projet is not null %}
+                                                <a class="pink"
+                                                   href="{{ path('lignefacture_details', { 'id': facture.id }) }}"
+                                                   title="Lignes">
+                                                    <i class="ace-icon fa fa-list-alt bigger-130"></i>
+                                                </a>
+                                            {% endif %}
+
+                                        {% endif %}
+                                        <a class="blue"
+                                           href="{{ path('facture_show', { 'id': facture.id }) }}"
+                                           title="voir">
+                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                        </a>
+                                        <a class="brown"
+                                           href="{{ path('facture_edit_date', { 'id': facture.id }) }}"
+                                           title="Modifier les dates">
+                                            <i class="ace-icon fa fa-calendar bigger-130"></i>
+                                        </a>
+                                        {% if facture.documentName is null %}
+                                            <a class="red"
+                                               href="{{ path('facture_sheet', { 'id': facture.id }) }}"
+                                               title="Uploader le timesheet">
+                                                <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+                                            </a>
+                                        {% else %}
+                                            <a title="Télécharger le Timesheet" class="purple"
+                                               href="{{ asset('uploads/documents/')~facture.documentName }}">
+                                                <i class="ace-icon fa fa-download bigger-130"></i>
+                                            </a>
+                                        {% endif %}
+
+                                        {% if facture.mission is not null and facture.nbjour > 0 %}
+                                            <a class="grey"
+                                               href="{{ path('facture_print', { 'id': facture.id }) }}"
+                                               title="Imprimer">
+                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if facture.mission is not null and facture.nbjour == 0 %}
+                                            <a class="grey"
+                                               href="{{ path('facture_print_hs', { 'id': facture.id }) }}"
+                                               title="Imprimer">
+                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if facture.projet is not null %}
+                                            <a class="grey"
+                                               href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
+                                               title="Imprimer">
+                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if facture.etat !='payé' %}
+
+                                            <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                                               onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
+                                               class="tooltip-error" data-rel="tooltip"
+                                               title="" id=""
+                                               data-original-title="-> DH">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-check-square bigger-120"></i>
+                                                                </span>
+                                            </a>
+
+                                        {% endif %}
+                                        {% if facture.mission is not null and facture.mission.devise !='DH' and facture.totalDH is null %}
+
+                                            <a href="#my-moda{{ facture.id }}" role="button"
+                                               class=""
+                                               data-toggle="modal">
+                                                <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                                            </a>
+                                            <div id="my-moda{{ facture.id }}"
+                                                 class="modal modal-test fade" style="display: none"
+                                                 tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-hidden="true">&times;
+                                                            </button>
+                                                            <h3 class="smaller lighter blue no-margin">
+                                                                {{ facture.totalTTC }} {{ facture.mission.devise }}
+                                                                -> DH </h3>
+                                                        </div>
+
+                                                        <div class="modal-body">
+
+
+                                                            <input type="hidden"
+                                                                   id="id_val{{ facture.id }}"
+                                                                   value="{{ facture.id }}"
+                                                                   class="form-control">
+                                                            <input type="text"
+                                                                   id="montant{{ facture.id }}"
+                                                                   placeholder="Total en DH"
+                                                                   class="form-control">
+                                                            <input type="text"
+                                                                   id="dateFin{{ facture.id }}"
+                                                                   placeholder="Date Fin"
+                                                                   class="form-control date-timepicker1">
+
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-sm btn-success ok pull-right"
+                                                                    id="{{ facture.id }}">
+                                                                <i class="ace-icon fa fa-check"></i>
+                                                                Enregistrer
+                                                            </button>
+                                                            <button class="btn btn-sm btn-danger pull-left"
+                                                                    data-dismiss="modal">
+                                                                <i class="ace-icon fa fa-times"></i>
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div>
+
+
+                                        {% endif %}
+
+                                        {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
+                                            <a class="red"
+                                               href="{{ path('facture_remove', { 'id': facture.id }) }}"
+                                               title="delete">
+                                                <i class="ace-icon fa fa-trash bigger-130"></i>
+                                            </a>
+                                            {% if facture.projet is null and facture.etat != 'payé' %}
+
+                                                {% if facture.facturehsups | length != 0 %}
+                                                    <a class="orange"
+                                                       href="{{ path('facture_edit_hs', { 'id': facture.id }) }}"
+                                                       title="modifier">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+                                                {% else %}
+                                                    <a class="orange"
+                                                       href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                       title="modifier">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
+                                                    <a class="orange"
+                                                       href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                       title="modifier">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+
+                                                {% endif %}
+                                                {% if facture.client =='PCS invest' and facture.etat != 'payé' %}
+                                                    <a class="orange"
+                                                       href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                       title="modifier">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+
+                                                {% endif %}
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                        data-toggle="dropdown"
+                                                        data-position="auto">
+                                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info"
+                                                           data-rel="tooltip"
+                                                           title=""
+                                                           data-original-title="View">
+                                    <span class="blue">
+                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                    </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#" class="tooltip-success"
+                                                           data-rel="tooltip" title=""
+                                                           data-original-title="Edit">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                </span>
+                                                        </a>
+                                                    </li>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <li>
+                                                            <a href="{{ path('facture_remove', { 'id': facture.id }) }}"
+                                                               class="tooltip-error" data-rel="tooltip"
+                                                               title=""
+                                                               data-original-title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                                        #}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <!-- page specific plugin scripts -->
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+
+        <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+        <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                var
+                    rowCount = $('#dynamic-table').length;
+                // console.log(rowCount);
+
+                //initiate dataTables plugin
+                var myTable =
+                    $('#dynamic-table')
+                        .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                        .DataTable({
+                            initComplete: function () {
+                                this.api().columns([4, 9]).every(function () {
+                                    var column = this;
+                                    var select = $('<select><option value="">--</option></select>')
+                                        .appendTo($(column.header()))
+                                        .on('change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+
+                                            column
+                                                .search(val ? '^' + val + '$' : '', true, false)
+                                                .draw();
+                                        });
+
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+
+                                    });
+                                });
+                            },
+                            language: {
+                                url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
+
+                            },
+                            bAutoWidth: false,
+                            "aoColumns": [
+                                {"bSortable": false},
+                                null, null, null, null, null, null, null, null, null, null, null, null, null,null,
+                            ],
+                            "aaSorting": [],
+
+
+                            "bProcessing": false,
+                            // "bServerSide": true,
+                            "ajax": {
+                                url: "{{ path('getfacture') }}",
+                                type: "GET",
+                                cache:false
+
+                            },
+
+
+                            //,
+                            // "sScrollY": "200px",
+                            //"bPaginate": false,
+
+                            //"sScrollX": "100%",
+                            //"sScrollXInner": "120%",
+                            "bScrollCollapse": true,
+                            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+
+                            //"iDisplayLength": 50
+
+
+                            select: {
+                                style: 'multi'
+                            }
+
+                        });
+
+
+                $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+                new $.fn.dataTable.Buttons(myTable, {
+                    buttons: [
+                        {
+                            "extend": "colvis",
+                            "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            columns: ':not(:first):not(:last)'
+                        },
+                        {
+                            "extend": "copy",
+                            "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                            "className": "btn btn-white btn-primary btn-bold"
+                        },
+                        {
+                            "extend": "excel",
+                            "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            exportOptions: {
+                                columns: ':not(:last-child)'
+                            }
+                        },
+
+                        {
+                            "extend": "print",
+                            "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            autoPrint: false,
+                            message: ''
+                        }
+                    ]
+                });
+                myTable.buttons().container().appendTo($('.tableTools-container'));
+
+                //style the message box
+                var defaultCopyAction = myTable.button(1).action();
+                myTable.button(1).action(function (e, dt, button, config) {
+                    defaultCopyAction(e, dt, button, config);
+                    $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+                });
+
+
+                var defaultColvisAction = myTable.button(0).action();
+                myTable.button(0).action(function (e, dt, button, config) {
+
+                    defaultColvisAction(e, dt, button, config);
+
+
+                    if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                        $('.dt-button-collection')
+                            .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                            .find('a').attr('href', '#').wrap("<li />")
+                    }
+                    $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+                });
+
+                ////
+
+                setTimeout(function () {
+                    $($('.tableTools-container')).find('a.dt-button').each(function () {
+                        var div = $(this).find(' > div').first();
+                        if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+                        else $(this).tooltip({container: 'body', title: $(this).text()});
+                    });
+                }, 500);
+
+
+                $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+
+                /********************************/
+                //add tooltip for small view action buttons in dropdown menu
+                $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+
+                //tooltip placement on right or left
+                function tooltip_placement(context, source) {
+                    var $source = $(source);
+                    var $parent = $source.closest('table');
+                    var off1 = $parent.offset();
+                    var w1 = $parent.width();
+
+                    var off2 = $source.offset();
+                    //var w2 = $source.width();
+
+                    if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                    return 'left';
+                }
+
+                $('.ok').click(function () {
+                    alert('ok');
+                    var idd = this.id;
+                    var Id = $('#id_val' + idd).val();
+                    var montant = $('#montant' + idd).val();
+                    var dateFin = $('#dateFin' + idd).val();
+//                    var montant = $('#montant' + idd).val();
+
+                    var url = Routing.generate('route_to_convert_devise');
+
+                    $.ajax({
+                        type: "POST",
+                        data: {
+
+                            id: Id,
+                            montant: montant,
+                            dateFin: dateFin
+                        },
+                        url: url,
+                        dataType: "json",
+                        success: function (response) {
+
+                            console.log(response);
+                            $('#my-moda' + Id).modal('hide');
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: " la montant est convertie en MAD, BC fournisseur & facture fournisseur sont crées avec succés",
+                                icon: 'succes',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+
+                                confirmButtonText: 'OK !'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    location.href = Routing.generate('facture_index');
+                                }
+                            })
+
+
+                        },
+                        error: function (error) {
+
+                            console.log(error);
+
+                        }
+
+
+                    });
+                });
+            })
+        </script>
+
+
+    {% endblock %}
