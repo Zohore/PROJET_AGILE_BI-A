@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Hope3k | Facture Fournisseur {% endblock %}{% block menu %}  <a
+        href="{{ path('facturefournisseur_index') }}">
+    Facture Fournisseur </a>   {% endblock %}   {% block menu_active %}    Modifier {% endblock %}{% block content %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Modifier Facture Fournisseur :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            {{ form_start(edit_form) }}
+                            {{ form_widget(edit_form) }}
+                            <div class="row">
+                                <div class="col-md-4"> <a href="{{ path('facturefournisseur_index') }}" class="btn btn-white btn-info btn-block">Back to the list</a></div>
+                                <div class="col-md-4">
+
+                                    <button class="btn btn-white btn-warning btn-block" type="submit"><i class="fa fa-edit"></i>
+                                        Modifier
+                                    </button>
+
+                                </div>
+                            </div>
+                            {{ form_end(edit_form) }}
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

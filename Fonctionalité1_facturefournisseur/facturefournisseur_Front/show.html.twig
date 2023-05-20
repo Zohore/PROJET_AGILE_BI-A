@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Facture fournisseur {% endblock %}{% block menu %}  <a
+        href="{{ path('facturefournisseur_index') }}">Facture fournisseur</a>   {% endblock %}   {% block menu_active %}    Détails {% endblock %}
+{% block content %}
+    <h1>Facturefournisseur</h1>
+
+    <table class="table table-detail">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ facturefournisseur.id }}</td>
+        </tr><tr>
+            <th>Numero</th>
+            <td>{{ facturefournisseur.numero }}</td>
+        </tr>
+        <tr>
+            <th>Achatht</th>
+            <td>{{ facturefournisseur.achatHT }}</td>
+        </tr>
+        <tr>
+            <th>Nbjours</th>
+            <td>{{ facturefournisseur.nbjours }}</td>
+        </tr>
+        <tr>
+            <th>Mois</th>
+            <td>{{ facturefournisseur.mois }}</td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td>{{ facturefournisseur.year }}</td>
+        </tr>
+        <tr>
+            <th>Achatttc</th>
+            <td>{{ facturefournisseur.achatTTC }}</td>
+        </tr>
+        <tr>
+            <th>Taxe</th>
+            <td>{{ facturefournisseur.taxe }}</td>
+        </tr>
+
+        <tr>
+            <th>Etat</th>
+            <td>{{ facturefournisseur.etat }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{% if facturefournisseur.date %}{{ facturefournisseur.date|date('Y-m-d') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Documentname</th>
+            <td>
+                <a href="{{ asset('uploads/documents/')~facturefournisseur.documentName }}">{{ facturefournisseur.documentName }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{% if facturefournisseur.updatedAt %}{{ facturefournisseur.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{% if facturefournisseur.createdAt %}{{ facturefournisseur.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="row">
+            <div class="col-md-4"><a href="{{ path('facturefournisseur_index') }}"
+                                     class="btn btn-white btn-block btn-info"><i class="fa fa-arrow-left"></i> Back to
+                    the list</a></div>
+            <div class="col-md-4"><a href="{{ path('facturefournisseur_edit', { 'id': facturefournisseur.id }) }}"
+                                     class="btn btn-white btn-block btn-warning"><i class="fa fa-edit"></i> Modifier</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <ul>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}

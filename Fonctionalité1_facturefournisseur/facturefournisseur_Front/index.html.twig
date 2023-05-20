@@ -1,0 +1,722 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | facture fournisseur {% endblock %}{% block menu %}  <a
+        href="{{ path('facturefournisseur_index') }}">Facture
+    fournisseur</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content1 %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Liste des facture fournisseur :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="clearfix">
+                                <div class="pull-right tableTools-container">
+                                </div>
+                            </div>
+                            <div class="table-header">
+                                facture fournisseurs : <a href="{{ path('facturefournisseur_new') }}"
+                                                          class="btn btn-white btn-default pull-right"
+                                                          style="margin-top: 2px;margin-right: 3px;">
+                                    <i class="fa fa-plus"></i>
+                                    Nouvelle facture fournisseur
+                                </a>
+
+                            </div>
+
+                            <!-- div.table-responsive -->
+                            <div class="alert alert-block alert-danger text-center">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="ace-icon fa fa-times"></i>
+                                </button>
+
+                                <p>
+                                    <strong>
+                                        <i class="ace-icon fa fa-warning"></i>
+                                        {{ facturefournisseurs_sans_facture | length }} Facture(s) </strong>
+                                    sans facture fournisseur merci de les uploader !
+                                </p>
+
+                                <p>
+                                    <a class="btn btn-danger" href="{{ path('facturefournisseur_sans') }}">
+                                        <i class="fa fa-list-alt"></i> Liste
+                                    </a>
+                                </p>
+                            </div>
+                            <!-- div.dataTables_borderWrap -->
+                            <div>
+                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                    <table id="dynamic-table"
+                                           class="table table-striped table-bordered table-hover dataTable no-footer text-center"
+                                           role="grid" aria-describedby="dynamic-table_info">
+                                        <thead style="font-weight: bold;">
+                                        <tr role="row">
+                                            <th class="center sorting_disabled" rowspan="1" colspan="1" aria-label="">
+
+
+                                                <label class="pos-rel">
+                                                    <input type="checkbox" class="ace">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1" style="color: #707070;"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Réference
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Fournisseur
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                consultant
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                date
+                                            </th>
+
+
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Mois
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                nb jours
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Achat HT
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Achat TTC
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Etat
+                                            </th>
+
+
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for facturefournisseur in facturefournisseurs %}
+
+                                            <tr role="row" class="odd">
+
+                                                <td class="center">
+
+                                                    {#{% if facturefournisseur.virements | length == 0 %}#}
+                                                    <label class="pos-rel">
+                                                        <input type="checkbox" class="ace"
+                                                               value="{{ facturefournisseur.id }}"
+                                                               data-id="{{ facturefournisseur.virements | length }}">
+                                                        <span class="lbl"></span>
+                                                    </label>
+                                                    {#{% endif %}#}
+                                                </td>
+                                                <td>
+
+
+                                                    {{ facturefournisseur.numero }}
+
+
+                                                </td>
+
+                                                <td>
+                                                    {% if facturefournisseur.fournisseur is null %}
+
+
+                                                    {% else %}
+
+                                                        {{ facturefournisseur.fournisseur }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+
+                                                    {% if facturefournisseur.consultant is null %}
+
+
+                                                    {% else %}
+
+                                                        {{ facturefournisseur.consultant }}
+
+
+                                                    {% endif %}
+
+
+                                                </td>
+
+
+                                                <td class="hidden-480">
+                                                    {% if facturefournisseur.date is null %}
+
+                                                    {% else %}
+                                                        {{ facturefournisseur.date|date('Y-m-d') }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td>
+                                                    {% if facturefournisseur.mois is null %}
+
+
+                                                    {% else %}
+
+                                                        {{ facturefournisseur.mois }}/{{ facturefournisseur.year }}
+
+
+                                                    {% endif %}
+
+                                                </td>
+
+                                                <td class="hidden-480">
+                                                    {% if facturefournisseur.nbjours is null %}
+
+                                                    {% else %}
+                                                        {{ facturefournisseur.nbjours }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td>
+                                                    {% if facturefournisseur.achatHT is null %}
+
+
+                                                    {% else %}
+
+                                                        {{ facturefournisseur.achatHT | number_format(2, '.', '') }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if facturefournisseur.achatTTC is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ facturefournisseur.achatTTC | number_format(2, '.', '') }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {{ facturefournisseur.etat }}
+
+                                                </td>
+
+                                                <td>
+                                                    <div class="hidden-sm hidden-xs action-buttons">
+                                                        <a class="blue"
+                                                           href="{{ path('facturefournisseur_show', { 'id': facturefournisseur.id }) }}"
+                                                           title="voir">
+                                                            <i class="ace-icon fa fa-search-plus bigger-160"></i>
+                                                        </a>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a class="orange"
+                                                               href="{{ path('facturefournisseur_edit', { 'id': facturefournisseur.id }) }}"
+                                                               title="modifier">
+                                                                <i class="ace-icon fa fa-pencil bigger-160"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                        {% if facturefournisseur.documentName is null %}
+                                                            <a title="Uploader Facture fournisseur" class="red"
+                                                               href="{{ path('facturefournisseur_update', { 'id': facturefournisseur.id }) }}">
+                                                                <i class="ace-icon fa fa-cloud-upload bigger-160"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a title="Télécharger Facture fournisseur" class="purple"
+                                                               href="{{ asset('uploads/documents/')~facturefournisseur.documentName }}">
+                                                                <i class="ace-icon fa fa-download bigger-160"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <div class="hidden-md hidden-lg">
+                                                        <div class="inline pos-rel">
+                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                                    data-toggle="dropdown"
+                                                                    data-position="auto">
+                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                            </button>
+
+                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                <li>
+                                                                    <a href="#" class="tooltip-info" data-rel="tooltip"
+                                                                       title=""
+                                                                       data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="#" class="tooltip-success"
+                                                                       data-rel="tooltip" title=""
+                                                                       data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="#" class="tooltip-error" data-rel="tooltip"
+                                                                       title=""
+                                                                       data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+                                    {% if is_granted('ROLE_COMPTABLE') %} {% else %} {% endif %}
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <a href="#" id="vir" class=" btn btn-primary text-center btn-block ">
+                                                <i class="ace-icon fa fa-exchange"></i> Régler Virement
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <!-- page specific plugin scripts -->
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+
+    <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+    <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    {#<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>#}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var rowCount = $('#dynamic-table').length;
+            console.log(rowCount);
+
+            //initiate dataTables plugin
+            var myTable =
+                $('#dynamic-table')
+                    .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                    .DataTable({
+                        initComplete: function () {
+                            this.api().columns([5, 9]).every(function () {
+                                var column = this;
+                                var select = $('<select><option value="" class="pull_right">-- filtrer --</option></select>')
+                                    .appendTo($(column.header()))
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+
+                                        column
+                                            .search(val ? '^' + val + '$' : '', true, false)
+                                            .draw();
+                                    });
+
+                                column.data().unique().sort().each(function (d, j) {
+                                    var val = $('<div/>').html(d).text();
+                                    select.append('<option value="' + val + '">' + val + '</option>');
+
+                                });
+                            });
+                        },
+                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
+
+                        },
+                        bAutoWidth: false,
+                        "aoColumns": [
+                            {"bSortable": true},
+                            null, null, null, null, null, null, null, null, null,
+                            {"bSortable": false}
+                        ],
+                        "aaSorting": [],
+
+
+                        //"bProcessing": true,
+                        //"bServerSide": true,
+                        //"sAjaxSource": "http://127.0.0.1/table.php"	,
+
+                        //,
+                        //"sScrollY": "200px",
+                        //"bPaginate": false,
+
+                        //"sScrollX": "100%",
+                        //"sScrollXInner": "120%",
+                        "bScrollCollapse": true,
+                        //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                        //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+
+                        //"iDisplayLength": 50
+
+
+                        select: {
+                            style: 'multi'
+                        }
+
+                    });
+
+
+            $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+            new $.fn.dataTable.Buttons(myTable, {
+                buttons: [
+                    {
+                        "extend": "colvis",
+                        "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        columns: ':not(:first):not(:last)'
+                    },
+                    {
+                        "extend": "copy",
+                        "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+                    {
+                        "extend": "excel",
+                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to CSV</span>",
+                        "className": "btn btn-white btn-primary btn-bold"
+                    },
+
+                    {
+                        "extend": "print",
+                        "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        autoPrint: false,
+                        message: ''
+                    }
+                ]
+            });
+            myTable.buttons().container().appendTo($('.tableTools-container'));
+
+            //style the message box
+            var defaultCopyAction = myTable.button(1).action();
+            myTable.button(1).action(function (e, dt, button, config) {
+                defaultCopyAction(e, dt, button, config);
+                $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+            });
+
+
+            var defaultColvisAction = myTable.button(0).action();
+            myTable.button(0).action(function (e, dt, button, config) {
+
+                defaultColvisAction(e, dt, button, config);
+
+
+                if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                    $('.dt-button-collection')
+                        .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                        .find('a').attr('href', '#').wrap("<li />")
+                }
+                $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+            });
+
+            ////
+
+            setTimeout(function () {
+                $($('.tableTools-container')).find('a.dt-button').each(function () {
+                    var div = $(this).find(' > div').first();
+                    if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+                    else $(this).tooltip({container: 'body', title: $(this).text()});
+                });
+            }, 500);
+
+
+            $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+
+
+            /********************************/
+            //add tooltip for small view action buttons in dropdown menu
+            $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+
+            //tooltip placement on right or left
+            function tooltip_placement(context, source) {
+                var $source = $(source);
+                var $parent = $source.closest('table');
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $source.offset();
+                //var w2 = $source.width();
+
+                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                return 'left';
+            }
+
+            myTable.on('select', function (e, dt, type, index) {
+                if (type === 'row') {
+                    $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+                }
+            });
+            myTable.on('deselect', function (e, dt, type, index) {
+                if (type === 'row') {
+                    $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
+                }
+            });
+
+
+            /////////////////////////////////
+            //table checkboxes
+            $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+            //select/deselect all rows according to table header checkbox
+            $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
+                var th_checked = this.checked;//checkbox inside "TH" table header
+
+                $('#dynamic-table').find('tbody > tr').each(function () {
+                    var row = this;
+                    if (th_checked) myTable.row(row).select();
+                    else  myTable.row(row).deselect();
+                });
+            });
+
+            //select/deselect a row when the checkbox is checked/unchecked
+            $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
+                var row = $(this).closest('tr').get(0);
+                if (this.checked) myTable.row(row).deselect();
+                else myTable.row(row).select();
+            });
+
+
+            $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+
+
+            //And for the first simple table, which doesn't have TableTools or dataTables
+            //select/deselect all rows according to table header checkbox
+            var active_class = 'active';
+            $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+                var th_checked = this.checked;//checkbox inside "TH" table header
+
+                $(this).closest('table').find('tbody > tr').each(function () {
+                    var row = this;
+                    if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                    else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+                });
+            });
+
+            //select/deselect a row when the checkbox is checked/unchecked
+            $('#simple-table').on('click', 'td input[type=checkbox]', function () {
+                var $row = $(this).closest('tr');
+                if ($row.is('.detail-row ')) return;
+                if (this.checked) $row.addClass(active_class);
+                else $row.removeClass(active_class);
+            });
+
+            $("#vir").click(function (event) {
+                event.preventDefault();
+                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
+                    return $(this).val();
+                }).get(); // <----
+
+
+                var url = Routing.generate('route_to_retrieve_bc');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idfacturefournisseur: searchIDs,
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+
+                        console.log(response);
+                        if (response.msg != null) {
+                            let str = response.msg;
+                            html = str;
+                            /* swal({
+                             title: "Alert",
+                             text: html,
+                             icon: "error",
+                             button: "Exit",
+                             html: true
+                             });*/
+
+                            Swal.fire({
+                                title: '<strong><u>Alert</u></strong>',
+                                icon: 'info',
+                                html: html,
+                                showCancelButton: true,
+                                showDenyButton: true,
+                                confirmButtonColor: '#3085d6',
+                                denyButtonColor: '#311bd6',
+                                cancelButtonColor: '#b33412',
+                                confirmButtonText: 'Refresh',
+                                denyButtonText: `Go Virements`,
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = Routing.generate('facturefournisseur_index');
+
+                                }
+                                else if (result.isDenied) {
+                                    location.href = Routing.generate('virement_index');
+
+                                }
+                            })
+                            /*  Swal.fire({
+                             icon: 'error',
+                             title: 'Oops...',
+                             text: 'Something went wrong!',
+                             footer: '<a href="">Why do I have this issue?</a>'
+                             })*/
+                        } else {
+
+                            location.href = Routing.generate('virement_index');
+                        }
+
+//                        location.href = Routing.generate('virement_index');
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
+
+
+                ///////////////////////////////////////////
+                $('#user-profile-3')
+                    .find('input[type=file]').ace_file_input({
+                    style: 'well',
+                    btn_choose: 'Change avatar',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-picture-o',
+                    thumbnail: 'large',
+                    droppable: true,
+
+                    allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+                    allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+                })
+                    .end().find('button[type=reset]').on(ace.click_event, function () {
+                    $('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+                })
+                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function () {
+                    $(this).prev().focus();
+                })
+                $('.input-mask-phone').mask('(999) 999-9999');
+
+                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{
+                    type: 'image',
+                    name: $('#avatar').attr('src')
+                }]);
+
+
+                ////////////////////
+
+            });
+
+
+        })
+    </script>
+
+
+{% endblock %}
