@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | client {% endblock %}{% block menu %}  <a
+        href="{{ path('client_index') }}">Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1 class="text-center">Clients list</h1>
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <a href="{{ path('client_new') }}" class="btn btn-white btn-primary btn-block"><i
+                        class="fa fa-plus-circle"></i> Ajouteur un Client</a>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-striped table-bordered table-hover dataTable no-footer text-left">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Tel</th>
+            <th>Fax</th>
+            <th>Email</th>
+            <th>Adresse</th>
+            <th>ICE</th>
+            <th>Echeance</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+            <tr>
+                <td><a href="{{ path('client_show', { 'id': client.id }) }}">{{ client.id }}</a></td>
+                <td>{{ client.nom }}</td>
+                <td>{{ client.tel }}</td>
+                <td>{{ client.fax }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.adresse }}</td>
+                <td>{{ client.ice }}</td>
+                <td>{{ client.echeance }}</td>
+                <td>
+
+                    <a href="{{ path('client_show', { 'id': client.id }) }}"><i
+                                class="fa fa-search-plus bigger-150 "></i></a>
+
+
+                    <a href="{{ path('client_edit', { 'id': client.id }) }}"><i
+                                class="fa fa-edit bigger-150 orange"></i></a>
+                    <a href="{{ path('client_log', { 'id': client.id }) }}"><i
+                                class="icon-menu fa fa-history dark-10 bigger-140" title="History"></i></a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- page specific plugin scripts -->
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+
+    <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+    <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+    <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.0/features/fuzzySearch/dataTables.fuzzySearch.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.dataTable').DataTable({
+
+                    fuzzySearch: {
+                        rankColumn: 0,
+                        toggleSmart: true,
+                        threshold: 0.1
+                    },
+
+                }
+            );
+
+        });
+    </script>
+
+
+{% endblock %}
