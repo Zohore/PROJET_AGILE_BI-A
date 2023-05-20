@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | consultant {% endblock %}{% block menu %}  <a href="{{ path('consultant_index') }}">consultant</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Ajouter un consultant</h4>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <button class="btn btn-white btn-success btn-bold btn-block" type="submit">
+                                    <i class="ace-icon fa fa-check bigger-120"></i>
+                                    Enregister
+                                </button>
+                                <br>
+                            </div>
+                        </div>
+
+                        {{ form_end(form) }}
+                        <br>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <a href="{{ path('consultant_index') }}" style="left: 0;"><i class="fa fa-backward"></i> Back to the list</a>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var type = $("#appbundle_consultant_type").val();
+            if (type == 'externe') {
+
+                $('#appbundle_consultant_salaire').parent().closest('div').hide();
+
+            } else {
+
+                $('#appbundle_consultant_salaire').parent().closest('div').show();
+            }
+            $('#appbundle_consultant_type').prop('selected', true).change(function () {
+                var test = $(this).val();
+                if (test == 'externe') {
+
+                    $('#appbundle_consultant_salaire').parent().closest('div').hide();
+
+                } else {
+
+                    $('#appbundle_consultant_salaire').parent().closest('div').show();
+                }
+
+            })
+        })
+    </script>
+
+{% endblock %}

@@ -1,0 +1,710 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | consultant {% endblock %}{% block menu %}  <a href="{{ path('consultant_index') }}">consultant</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content %}
+
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Liste des Consultants :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="{{ path('consultant_update_poids') }}">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="clearfix">
+                                <div class="pull-right tableTools-container">
+                                </div>
+                            </div>
+                            <div class="table-header">
+                                Consultants : <a href="{{ path('consultant_new') }}"
+                                                 class="btn btn-white btn-default pull-right"
+                                                 style="margin-top: 2px;margin-right: 3px;">
+                                    <i class="fa fa-plus"></i>
+                                    Nouveau Consultant
+                                </a>
+
+                            </div>
+
+                            <!-- div.table-responsive -->
+
+                            <!-- div.dataTables_borderWrap -->
+                            <div>
+                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                    <table id="dynamic-table"
+                                           class="table table-striped table-bordered table-hover dataTable no-footer text-left"
+                                           role="grid" aria-describedby="dynamic-table_info">
+                                        <thead style="font-weight: bold;">
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1" style="color: #707070;"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Nom
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                email
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                adresse
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
+                                                tel
+                                            </th>
+
+
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                type
+                                            </th>
+
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                rib
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Echeance
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Auto_virement
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Active
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Date Fin
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Poids
+                                            </th>
+
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for consultant in consultants %}
+
+                                            <tr role="row" class="odd">
+                                                <td>
+
+
+                                                    {{ consultant.nom }}
+
+
+                                                </td>
+
+
+                                                <td>
+                                                    {% if consultant.email is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ consultant.email }}
+
+
+                                                    {% endif %}
+                                                </td>
+
+
+                                                <td>
+                                                    {% if consultant.adresse is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ consultant.adresse }}
+
+
+                                                    {% endif %}
+
+                                                </td>
+
+                                                <td class="hidden-480">
+                                                    {% if consultant.tel is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ consultant.tel }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if consultant.type is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ consultant.type }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+
+                                                <td>
+                                                    {% if consultant.rib is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ consultant.rib }}
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if consultant.echeance is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ consultant.echeance }}
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if consultant.autoVirement is null %}
+                                                        --
+
+                                                    {% else %}
+
+
+
+                                                        <div class="text-center">
+                                                            <label class="text-center">
+                                                                <input id="gritter-light"
+                                                                        {% if consultant.autoVirement == 1 %}
+
+                                                                            checked="checked"
+
+                                                                        {% endif %}
+                                                                       value="{{ consultant.autoVirement }}"
+                                                                       type="checkbox" data-id="{{ consultant.id }}"
+                                                                       class="ace ace-switch ace-switch-5 switch">
+                                                                <span class="lbl middle"></span>
+                                                            </label>
+                                                        </div>
+
+
+
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if consultant.active is null %}
+                                                        --
+
+                                                    {% else %}
+                                                        {% if consultant.active == '1' %}
+                                                            Oui
+                                                        {% else %}
+                                                            Non
+                                                        {% endif %}
+
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if consultant.dateFin is not null %}
+                                                        {{ consultant.dateFin |date('d/m/Y') }}
+                                                    {% else %}
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if consultant.poids is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ consultant.poids }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <div class="hidden-sm hidden-xs action-buttons">
+                                                        <a class="blue"
+                                                           href="{{ path('consultant_show', { 'id': consultant.id }) }}"
+                                                           title="voir">
+                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                        </a>
+                                                        <a href="{{ path('consultant_log', { 'id': consultant.id }) }}"><i
+                                                                    class="icon-menu fa fa-history dark-10 bigger-140"></i></a>
+                                                        <a class="orange"
+                                                           href="{{ path('consultant_edit', { 'id': consultant.id }) }}"
+                                                           title="modifier">
+                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                        </a>
+                                                        {% if consultant.active == '1' %}
+                                                            <a href="#my-moda{{ consultant.id }}" role="button"
+                                                               class="dark"
+                                                               data-toggle="modal">
+                                                                <i class="ace-icon fa fa-close bigger-130"></i>
+                                                            </a>
+                                                            <div id="my-moda{{ consultant.id }}"
+                                                                 class="modal modal-test fade"
+                                                                 style="display: none" tabindex="-1">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-hidden="true">&times;
+                                                                            </button>
+
+                                                                        </div>
+
+                                                                        <div class="modal-body">
+
+
+                                                                            <input type="hidden"
+                                                                                   id="id_val{{ consultant.id }}"
+                                                                                   value="{{ consultant.id }}"
+                                                                                   class="form-control">
+                                                                            <input type="text"
+                                                                                   id="dateFin{{ consultant.id }}"
+                                                                                   placeholder="Date Fin"
+                                                                                   class="form-control date-timepicker1">
+
+                                                                        </div>
+
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-sm btn-success ok pull-right"
+                                                                                    id="{{ consultant.id }}">
+                                                                                <i class="ace-icon fa fa-check"></i>
+                                                                                OK
+                                                                            </button>
+
+                                                                        </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div>
+                                                        {% else %}
+                                                            <a class="green"
+                                                               href="{{ path('consultant_activate', { 'id': consultant.id }) }}"
+                                                               title="Activer">
+                                                                <i class="ace-icon fa fa-check bigger-130"></i>
+                                                            </a>
+                                                        {% endif %}
+
+                                                        <a class="red" href=""
+                                                           onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
+                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                        </a>
+
+                                                    </div>
+
+                                                    <div class="hidden-md hidden-lg">
+                                                        <div class="inline pos-rel">
+                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                                    data-toggle="dropdown"
+                                                                    data-position="auto">
+                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                            </button>
+
+                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                <li>
+                                                                    <a href="#" class="tooltip-info" data-rel="tooltip"
+                                                                       title=""
+                                                                       data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="#" class="tooltip-success"
+                                                                       data-rel="tooltip" title=""
+                                                                       data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="#" class="tooltip-error" data-rel="tooltip"
+                                                                       title=""
+                                                                       data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <a href="{{ path('consultant_update_poids') }}"
+                                               class="btn btn-block btn-white btn-success">
+                                                <i class="fa fa-refresh"></i>
+                                                Actualiser les Poids
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <!-- page specific plugin scripts -->
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+
+        <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+        <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('.ok').click(function () {
+
+                    var idd = this.id;
+                    var Id = $('#id_val' + idd).val();
+                    var dateFin = $('#dateFin' + idd).val();
+                    console.log(idd, Id, dateFin);
+                    var url = Routing.generate('consultant_desactivate');
+
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            id: Id,
+                            dateFin: dateFin
+                        },
+                        url: url,
+                        dataType: "json",
+                        success: function (response) {
+
+                            console.log(response);
+                            $('#my-moda' + Id).modal('hide');
+                            Swal.fire({
+                                title: '<i class="fa fa-check"></i> Success',
+                                text: " Consultant Non actif " + dateFin,
+                                icon: 'succes',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+
+                                confirmButtonText: 'OK !'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    location.href = Routing.generate('consultant_index');
+                                }
+                            })
+
+
+                        },
+                        error: function (error) {
+
+                            console.log(error);
+
+                        }
+
+
+                    });
+                });
+
+                //initiate dataTables plugin
+                var myTable =
+                    $('#dynamic-table')
+                        .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                        .DataTable({
+                            initComplete: function () {
+                                this.api().columns([6]).every(function () {
+                                    var column = this;
+                                    var select = $('<select><option value="">--</option></select>')
+                                        .appendTo($(column.header()))
+                                        .on('change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+
+                                            column
+                                                .search(val ? '^' + val + '$' : '', true, false)
+                                                .draw();
+                                        });
+
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+
+                                    });
+                                });
+                            },
+                            language: {
+                                url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
+
+                            },
+                            bAutoWidth: false,
+                            "aoColumns": [
+                                {"bSortable": false},
+                                null, null, null, null, null, null, null, null, null,null,
+                                {"bSortable": false}
+                            ],
+                            "aaSorting": [],
+
+
+                            //"bProcessing": true,
+                            //"bServerSide": true,
+                            //"sAjaxSource": "http://127.0.0.1/table.php"	,
+
+                            //,
+                            //"sScrollY": "200px",
+                            //"bPaginate": false,
+
+                            //"sScrollX": "100%",
+                            //"sScrollXInner": "120%",
+                            "bScrollCollapse": true,
+                            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+
+                            //"iDisplayLength": 50
+
+
+                            select: {
+                                style: 'multi'
+                            }
+
+                        });
+
+
+                $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+                new $.fn.dataTable.Buttons(myTable, {
+                    buttons: [
+                        {
+                            "extend": "colvis",
+                            "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            columns: ':not(:first):not(:last)'
+                        },
+                        {
+                            "extend": "copy",
+                            "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                            "className": "btn btn-white btn-primary btn-bold"
+                        },
+                        {
+                            "extend": "excel",
+                            "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to CSV</span>",
+                            "className": "btn btn-white btn-primary btn-bold"
+                        },
+
+                        {
+                            "extend": "print",
+                            "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            autoPrint: false,
+                            message: ''
+                        }
+                    ]
+                });
+                myTable.buttons().container().appendTo($('.tableTools-container'));
+
+                //style the message box
+                var defaultCopyAction = myTable.button(1).action();
+                myTable.button(1).action(function (e, dt, button, config) {
+                    defaultCopyAction(e, dt, button, config);
+                    $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+                });
+
+
+                var defaultColvisAction = myTable.button(0).action();
+                myTable.button(0).action(function (e, dt, button, config) {
+
+                    defaultColvisAction(e, dt, button, config);
+
+
+                    if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                        $('.dt-button-collection')
+                            .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                            .find('a').attr('href', '#').wrap("<li />")
+                    }
+                    $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+                });
+
+                ////
+
+                setTimeout(function () {
+                    $($('.tableTools-container')).find('a.dt-button').each(function () {
+                        var div = $(this).find(' > div').first();
+                        if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+                        else $(this).tooltip({container: 'body', title: $(this).text()});
+                    });
+                }, 500);
+
+
+                $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+
+                /********************************/
+                //add tooltip for small view action buttons in dropdown menu
+                $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+
+                //tooltip placement on right or left
+                function tooltip_placement(context, source) {
+                    var $source = $(source);
+                    var $parent = $source.closest('table');
+                    var off1 = $parent.offset();
+                    var w1 = $parent.width();
+
+                    var off2 = $source.offset();
+                    //var w2 = $source.width();
+
+                    if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                    return 'left';
+                }
+
+
+                /***************/
+                /***************/
+                $('.switch').click(function () {
+
+                    valeur = $(this).val();
+                    if ($(this).is(':checked')) {
+
+                        valeur = 1;
+                    } else {
+                        valeur = 0;
+
+
+                    }
+
+                    //ajax
+                    var url = Routing.generate('make_autovirement_true_or_false', {id: $(this).data("id")});
+                    $.ajax({
+
+                        url: url,
+                        type: 'POST',
+                        date: {},
+                        dataType: 'json',
+                        success: function (data) {
+
+                            console.log(valeur)
+                            let str;
+                            if (valeur !== 0) {
+
+                                str = 'le virement automatique est activé pour ce consultant';
+                                swal({
+                                    title: "Success",
+                                    text: str,
+                                    icon: "success",
+                                    button: "Exit",
+                                });
+                            } else {
+                                str = 'le virement automatique est désactivé pour ce consultant';
+                                swal({
+                                    title: "Success",
+                                    text: str,
+                                    icon: "success",
+                                    button: "Exit",
+                                });
+                            }
+
+                            console.log(data);
+                        },
+                        error: {}
+
+                    })
+                });
+                //end_ajax
+            })
+        </script>
+
+
+    {% endblock %}

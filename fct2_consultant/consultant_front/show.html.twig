@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | consultant {% endblock %}{% block menu %}  <a href="{{ path('consultant_index') }}">consultant</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Consultant</h1>
+
+    <table class="table table-detail">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ consultant.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ consultant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ consultant.type }}</td>
+            </tr>
+            <tr>
+                <th>Salaire</th>
+                <td>{{ consultant.salaire }}</td>
+            </tr>
+            <tr>
+                <th>Rib</th>
+                <td>{{ consultant.rib }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ consultant.tel }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ consultant.email }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ consultant.adresse }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('consultant_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('consultant_edit', { 'id': consultant.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
