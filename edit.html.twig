@@ -1,0 +1,463 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Mission {% endblock %}
+
+{% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+
+        fieldset fieldset {
+
+            /*  background: rgba(255, 255, 255, 1);
+              background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+              background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);*/
+
+        }
+
+        fieldset legend {
+
+            font-size: 14px;
+        }
+
+        fieldset[id*='_bcclients_'] {
+            border: 1px solid #c9c4c4;
+            border-radius: 10px;
+
+        }
+
+        fieldset[id*='_bcclients_'] label {
+            font-size: 12px;
+
+        }
+
+        .inl .form-group.form-group {
+
+            float: left;
+            display: inline;
+            padding: 5px;
+
+        }
+
+        .appbundle_mission_bcclients-collection-actions a {
+            border-radius: 7px;
+            margin-right: 2px;
+        }
+    </style>
+{% endblock %}
+   {% block menu_active %}    Modifier {% endblock %}
+{% block content1 %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Modifier une Mission :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="{{ path('mission_index') }}">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        {{ form_start(form) }}
+                        <div class="col-md-6 col-md-offset-3">
+
+
+                            {{ form_row(form.client) }}
+                            {{ form_row(form.consultant) }}
+                            {{ form_row(form.fournisseur) }}
+
+                            {{ form_row(form.job) }}
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+
+                            <div id="my-modal" class="modal fade" tabindex="-1" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">×
+                                            </button>
+                                            <h3 class="smaller lighter blue no-margin">
+                                                Création d'un Nouveau Bc client </h3>
+
+
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div id="appbundle_bcclient">
+                                                <div class="form-group"><label for="appbundle_bcclient_code">N° de bon
+                                                        de commande</label><input type="text"
+                                                                                  id="appbundle_bcclient_code"
+                                                                                  name="appbundle_bcclient[code]"
+                                                                                  class="form-control"></div>
+                                                <div class="form-group"><label for="appbundle_bcclient_ncontrat">N° de
+                                                        Contrat cadre</label><input type="text"
+                                                                                    id="appbundle_bcclient_ncontrat"
+                                                                                    name="appbundle_bcclient[ncontrat]"
+                                                                                    class="form-control"></div>
+                                                <div class="form-group"><label for="appbundle_bcclient_application">Application</label><input
+                                                            type="text" id="appbundle_bcclient_application"
+                                                            name="appbundle_bcclient[application]" maxlength="255"
+                                                            class="form-control"></div>
+                                                <div class="form-group"><label
+                                                            for="appbundle_bcclient_avenant">Avenant</label><input
+                                                            type="text" id="appbundle_bcclient_avenant"
+                                                            name="appbundle_bcclient[avenant]" maxlength="255"
+                                                            class="form-control"></div>
+                                                <div class="form-group"><label class="required"
+                                                                               for="appbundle_bcclient_type">Type</label><select
+                                                            id="appbundle_bcclient_type" name="appbundle_bcclient[type]"
+                                                            class="form-control">
+                                                        <option value="DIRECT">DIRECT</option>
+                                                        <option value="PORTAGE">PORTAGE</option>
+                                                    </select></div>
+                                                <div class="form-group"><label for="appbundle_bcclient_date"
+                                                                               class="required">Date</label><input
+                                                            type="text" id="appbundle_bcclient_date"
+                                                            name="appbundle_bcclient[date]" required="required"
+                                                            class="date-timepicker1 form-control"></div>
+                                            </div>
+                                            <div class="form-group"><label for="nbjour"
+                                                                           class="required">Nombre de
+                                                    jours</label><input
+                                                        type="number" id="nbjour"
+                                                        name="appbundle_bcclient[nbjour]" required="required"
+                                                        class="form-control"></div>
+                                        </div>
+
+                                        <div class="modal-footer">
+
+                                            <button class="btn btn-sm btn-success" id="saveBcclient" type="button">
+                                                <i class="ace-icon fa fa-check-circle"></i>
+                                                Enregister
+                                            </button>
+                                            <button class="btn btn-sm btn-danger pull-right"
+                                                    data-dismiss="modal">
+                                                <i class="ace-icon fa fa-times"></i>
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+
+                                </div><!-- /.modal-dialog -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-6 col-md-offset-3 bcclientSelect">
+                            <label class="" for="bcclient">Bc client</label>
+
+                            <select name="bcclient[]" id="bcclient" class="chosen-select form-control" multiple>
+                                {% for bc in bcclients %}
+                                    {% if bc in mission.bcclients %}
+                                        <option value="{{ bc.id }}" selected="selected">{{ bc }}</option>
+
+                                    {% else %}
+
+                                        <option value="{{ bc.id }}">{{ bc }}</option>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+
+
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#my-modal" role="button" class="text-info text-justify  "
+                               data-toggle="modal">
+                                <i class="fa fa-plus"></i> Créer un Bc client
+                            </a>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row">
+
+                                <div class="col-md-4 border-right">
+
+
+                                    {{ form_row(form.dateDebut) }}
+                                    {{ form_row(form.dateFin) }}
+                                </div>
+                                <div class="col-md-4 border-right ">
+
+
+                                    {{ form_row(form.prixAchat) }} {{ form_row(form.prixVente) }}
+
+                                </div>
+
+                                <div class="col-md-4 ">
+
+                                    {{ form_row(form.type) }}
+                                    {{ form_row(form.devise) }}
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="space"></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row">
+                                <div class="col-xs-4 border-right">
+                                    <label for="appbundle_mission_bcFile_file" class="">Bon de commande client</label>
+                                    <input type="file" id="appbundle_mission_bcFile_file"
+                                           name="appbundle_mission[bcFile][file]"
+                                           class="form-control-file btn btn-white">
+
+                                    </label>
+                                </div>
+                                <div class="col-xs-4 border-right">
+                                    <label for="appbundle_mission_bcFile_file" class="">Contrat fournisseur</label>
+                                    <input type="file" id="appbundle_mission_contratFFile_file"
+                                           name="appbundle_mission[contratFFile][file]"
+                                           class="form-control-file btn btn-white">
+
+                                    </label>
+                                </div>
+                                <div class="col-xs-4">
+
+                                    <div class="pull_right">
+                                        <span class="bolder green">contract cadre ?</span>
+                                        <br>
+                                        <label class="">
+                                            <input name="switch-field-1" class="ace ace-switch" type="checkbox"
+                                                   id="contrat_cadre">
+                                            <span class="lbl"></span>
+                                        </label>
+                                        {{ form_row(form.timesheet) }}
+
+                                    </div>
+                                    <div id="contrat_client">
+
+                                        <label for="appbundle_mission_contratCFile_file" class="">Contrat client</label>
+                                        <input type="file" id="appbundle_mission_contratCFile_file"
+                                               name="appbundle_mission[contratCFile][file]"
+                                               class="form-control-file btn btn-white">
+
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="space"></div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-1">
+                        {# {{ form_row(form.bcclient) }} #}
+                        {# {{ form_row(form.verifiedBy) }} #}
+                        {# {{ form_row(form.validatedBy) }} #}
+
+                        <a href="{{ path('mission_index') }}" class="btn btn-white btn-info btn-block"><i
+                                    class="fa fa-reply"></i> Retour</a>
+                    </div>
+                    <div class="col-md-4 col-md-offset-1">
+
+
+                        <button class="btn btn-white btn-success btn-block" type="submit" formnovalidate>
+                            <i class="ace-icon fa fa-check"></i>
+                            Enregistrer
+                        </button>
+                    </div>
+
+                </div>
+                <div class="space"></div>
+                {{ form_widget(form._token) }}
+
+                {{ form_end(form , {'render_rest': false}) }}
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <hr>
+                <center>
+                    {{ form_start(delete_form) }}
+                    <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+                </center>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+//hide select Bc client
+// $('.bcclientSelect').hide();
+
+// save Bc client
+            console.log($('#my-modal').find('input').get());
+
+
+            console.log($('#my-modal').find('input').get()) ;
+
+
+
+
+            $('#saveBcclient').attr('disabled',true);
+            $('#nbjour').keyup(function(){
+                if($(this).val().length !=0)
+                    $('#saveBcclient').attr('disabled', false);
+                else
+                    $('#saveBcclient').attr('disabled',true);
+            });
+
+
+            $('#saveBcclient').click(function (){
+
+                var code = $('#appbundle_bcclient_code').val();
+                var application = $('#appbundle_bcclient_application').val();
+                var contrat = $('#appbundle_bcclient_ncontrat').val();
+                var avenant = $('#appbundle_bcclient_avenant').val();
+                var type = $('#appbundle_bcclient_type').val();
+                var date = $('#appbundle_bcclient_date').val();
+                var nbjour = $('#nbjour').val();
+                console.log(date);
+
+                //call ajax
+
+                var url = Routing.generate('save_bc');
+                $.ajax({
+
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        code:code,
+                        avenant:avenant,
+                        application:application,
+                        contrat:contrat,
+                        type:type,
+                        nbjour: nbjour,
+                        date:date
+
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#my-modal').modal('toggle');
+                        $('.bcclientSelect').show();
+
+                        var listeInputs = $('#my-modal').find('input') ;
+
+                        $.each(listeInputs,function (i){
+                            $(this).val('');
+                            console.log(this,i)
+                        })
+                        /*swal({
+                                title: "Success",
+                                text: 'str',
+                                icon: "success",
+                                button: "Exit",
+                            });*/
+                        // $('#bcclient').empty();
+                        /* var newOption = $('<option value=' + departement.id[i] + '>departement.nom[i]</option>');
+                         $('#appbundle_mission_departement').append(newOption);
+                         $('#appbundle_mission_departement').trigger("chosen:updated");*/
+                        $("#bcclient").append('<option value="' + +data.id + '" selected="selected">' + data.code+ '</option>');
+                        $("#bcclient").trigger('chosen:updated');
+
+                        // $('.bcclientSelect').hide();
+                    },
+                    error: {}
+
+                });
+            });
+
+            $(".chosen-select").chosen(
+                {
+                    placeholder_text: "Liste des Bc clients ...",
+
+                    no_results_text: "Oops, nothing found!"
+                }
+            );
+
+            $("#contrat_cadre").click(function () {
+                if ($(this).is(':checked')) {
+                    $('#contrat_client').hide();
+
+                } else {
+                    $('#contrat_client').show();
+
+                }
+
+            });
+
+            $('.spinner1').ace_spinner({
+                value: 100,
+                min: 0,
+                max: 10000,
+                step: 200,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $(".spinner1").blur(function () {
+                //  alert(this.value);
+                $('#appbundle_mission_prixAchat').val(this.value);
+            });
+            $("#spinner2").blur(function () {
+                $('#appbundle_mission_prixVente').val(this.value);
+            });
+
+
+        });
+    </script>
+{% endblock %}
