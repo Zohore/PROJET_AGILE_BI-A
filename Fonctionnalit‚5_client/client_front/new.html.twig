@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | client {% endblock %}{% block menu %}  <a
+        href="{{ path('client_index') }}">client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <div class="col-md-10 col-md-offset-1">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Client</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions center">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            Submit
+                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
