@@ -1,0 +1,88 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Hope3k | Facture Hors Prestation{% endblock %}{% block menu %}  <a
+        href="{{ path('factureHP_index') }}">Facture hors Prestation</a>   {% endblock %}   {% block menu_active %}    Détails {% endblock %}
+{% block content %}
+    <h1>FactureHorsPrestation</h1>
+
+    <table class="table table-detail">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ facturehorsprestation.id }}</td>
+        </tr><tr>
+            <th>Numero</th>
+            <td>{{ facturehorsprestation.numero }}</td>
+        </tr>
+        <tr>
+            <th>Achatht</th>
+            <td>{{ facturehorsprestation.achatHT }}</td>
+        </tr>
+        <tr>
+            <th>Nbjours</th>
+            <td>{{ facturehorsprestation.nbjours }}</td>
+        </tr>
+        <tr>
+            <th>Mois</th>
+            <td>{{ facturehorsprestation.mois }}</td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td>{{ facturehorsprestation.year }}</td>
+        </tr>
+        <tr>
+            <th>Achatttc</th>
+            <td>{{ facturehorsprestation.achatTTC }}</td>
+        </tr>
+        <tr>
+            <th>Taxe</th>
+            <td>{{ facturehorsprestation.taxe }}</td>
+        </tr>
+
+        <tr>
+            <th>Etat</th>
+            <td>{{ facturehorsprestation.etat }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{% if facturehorsprestation.date %}{{ facturehorsprestation.date|date('Y-m-d') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Documentname</th>
+            <td>
+                <a href="{{ asset('uploads/documents/')~facturehorsprestation.documentName }}">{{ facturehorsprestation.documentName }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{% if facturehorsprestation.updatedAt %}{{ facturehorsprestation.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{% if facturehorsprestation.createdAt %}{{ facturehorsprestation.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+   
+{% if is_granted('ROLE_ADMIN') %}
+
+        <div class="row">
+            <div class="col-md-4"><a href="{{ path('factureHP_index') }}"
+                                     class="btn btn-white btn-block btn-info"><i class="fa fa-arrow-left"></i> Back to
+                    the list</a></div>
+            <div class="col-md-4"><a href="{{ path('facturehorsprestation_edit', { 'id': facturehorsprestation.id }) }}"
+                                     class="btn btn-white btn-block btn-warning"><i class="fa fa-edit"></i> Modifier</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <ul>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    {% endif %}
+
+{% endblock %}
