@@ -1,0 +1,236 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Facture fournisseur {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+
+        fieldset fieldset {
+
+            /*  background: rgba(255, 255, 255, 1);
+              background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+              background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+              filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);*/
+
+        }
+
+        fieldset legend {
+
+            font-size: 14px;
+        }
+
+        fieldset[id*='_bcclients_'] {
+            border: 1px solid #c9c4c4;
+            border-radius: 10px;
+
+        }
+
+        fieldset[id*='_bcclients_'] label {
+            font-size: 12px;
+
+        }
+
+        .inl .form-group.form-group {
+
+            float: left;
+            display: inline;
+            padding: 5px;
+
+        }
+
+        .appbundle_mission_bcclients-collection-actions a {
+            border-radius: 7px;
+            margin-right: 2px;
+        }
+    </style>
+{% endblock %}
+{% block menu %}  <a href="{{ path('facturefournisseur_index') }}">Facture fournisseur</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter {% endblock %}
+{% block content1 %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Ajouter une Facture fournisseur :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="{{ path('facturefournisseur_index') }}">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    {{ form_start(form) }}
+                    <div class="row">
+
+                        <div class="col-md-6 col-md-offset-3">
+
+                            {{ form_row(form.fournisseur) }}
+                        </div>
+                        <div class="col-md-6 col-md-offset-3">
+                            {{ form_row(form.consultant) }}
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            {{ form_row(form.date) }}
+
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(form.mois) }}
+
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(form.year) }}
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="appbundle_facturefournisseur_achatHT" class="required">Achat HT</label>
+                                <input type="number" id="appbundle_facturefournisseur_achatHT"
+                                       name="appbundle_facturefournisseur[achatHT]"
+                                       class="achatHT form-control" step="0.01">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="appbundle_facturefournisseur_taxe"
+                                       class="required">Taxe</label>
+                                <input type="number"
+                                       id="appbundle_facturefournisseur_taxe"
+                                       name="appbundle_facturefournisseur[taxe]"
+
+                                       class="form-control taxe" step="0.01"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="appbundle_facturefournisseur_achatTTC" class="required">
+                                    Achat TTC
+                                </label>
+                                <input type="number" id="appbundle_facturefournisseur_achatTTC"
+                                       name="appbundle_facturefournisseur[achatTTC]" required="required"
+                                       class="achatTTC form-control" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space"></div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            {{ form_row(form.numero) }}
+                        </div>
+                        <div class="col-md-4 col-md-offset-2">
+                            <div class="form-group">
+                                <label for="appbundle_facturefournisseur_documentFile_file">Facture Fournisseur</label>
+                                <input type="file" id="appbundle_facturefournisseur_documentFile_file"
+                                       name="appbundle_facturefournisseur[documentFile][file]"
+                                       class="form-control-file">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space"></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-1">
+                            {# {{ form_row(form.bcclient) }} #}
+                            {# {{ form_row(form.verifiedBy) }} #}
+                            {# {{ form_row(form.validatedBy) }} #}
+
+                            <a href="{{ path('facturefournisseur_index') }}" class="btn btn-white btn-info btn-block"><i
+                                        class="fa fa-reply"></i> Retour</a>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+
+
+                            <button class="btn btn-white btn-success btn-block" type="submit">
+                                <i class="ace-icon fa fa-check"></i>
+                                Enregistrer
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {{ form_widget(form._token) }}
+
+        {{ form_end(form , {'render_rest': false}) }}
+
+
+    </div>
+
+
+    </div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $('.achatHT').blur(function () {
+
+                var achatHT = $(this).val();
+
+                $('.taxe').val(parseFloat(achatHT * 0.2).toFixed(2));
+                $('.achatTTC').val(parseFloat(achatHT * 1.2).toFixed(2));
+
+
+            })
+
+        });
+    </script>
+{% endblock %}
