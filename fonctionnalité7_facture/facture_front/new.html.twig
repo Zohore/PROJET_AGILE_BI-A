@@ -1,0 +1,391 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Facture {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+     <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+     <style type="text/css">
+
+         fieldset fieldset {
+
+             background: rgba(255, 255, 255, 1);
+             background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+             background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+             background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+             background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+             background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);
+
+         }
+
+         fieldset[id*='_facturehsups_'] {
+             border: 1px solid black;
+             width: 50%;
+
+         }
+
+         fieldset[id*='_facturehsups_'] div div {
+             width: 50%;
+
+         }
+
+         .inl .form-group.form-group {
+
+             float: left;
+             display: inline;
+             padding: 5px;
+
+         }
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('facture_index') }}">Facture</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter {% endblock %}
+{% block content %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Ajouter une facture :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="{{ path('facture_index') }}">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    {{ form_start(form) }}
+                    <div class="row">
+
+                        <div class="col-md-6 col-md-offset-3">
+                            {{ form_row(form.client) }}
+                            {{ form_row(form.mission) }}
+                            {{ form_row(form.consultant) }}
+                            {{ form_row(form.comptebancaire, { 'attr':{'readonly':true} }) }}
+
+                            <div class="row">
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-md-offset-3 ">
+
+                            <div class="form-group"><label for="appbundle_facture_date" class="required">Date
+                                    de facture</label>
+                                <input type="text" id="appbundle_facture_date" name="appbundle_facture[date]"
+                                       required="required" class="date-timepicker1 form-control "
+                                       placeholder="MM/DD/YYYY">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+
+                        <div class="col-md-4 border-right ">
+                            <div class="form-group mois">
+                                <label class="required" for="appbundle_facture_mois">Mois</label>
+                                <select id="appbundle_facture_mois" name="appbundle_facture[mois]" class="form-control">
+                                    <option value="1">Janvier</option>
+                                    <option value="2">Fevrier</option>
+                                    <option value="3">Mars</option>
+                                    <option value="4">Avril</option>
+                                    <option value="5">Mai</option>
+                                    <option value="6">Juin</option>
+                                    <option value="7">Juillet</option>
+                                    <option value="8">Aout</option>
+                                    <option value="9">Septembre</option>
+                                    <option value="10">Octobre</option>
+                                    <option value="11">Novembre</option>
+                                    <option value="12">Décembre</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4 border-right">
+
+                            <div class="form-group"><label for="appbundle_facture_year">Année</label><input
+                                        type="number" id="appbundle_facture_year" name="appbundle_facture[year]"
+                                        class="form-control"></div>
+
+                        </div>
+                        <div class="col-md-4 border-right " id="nbjour">
+
+                            <div class="form-group"><label for="appbundle_facture_nbjour">Nombre de jours</label><input
+                                        type="number" id="appbundle_facture_nbjour" name="appbundle_facture[nbjour]"
+                                        class="form-control" value=""></div>
+
+                            <label class="pull-right">
+                                <small class="muted smaller-90">Heures supplémentaires:</small>
+
+                                <input id="id-button-borders" type="checkbox" class="ace ace-switch ace-switch-5">
+                                <span class="lbl middle"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row" id="hs" style="display: none;">
+                        <div class="col-md-10 col-md-offset-1 ">
+
+                            {% form_theme form '::jquery.collection.html.twig' %}
+                            {#{% for toto in form.commandes %}#}
+                            {#{{ form_row(toto, {'label': 'mon label' } ) }}#}
+                            {#{% endfor %}#}
+                            {{ form_row(form.facturehsups,{'label' : 'Heures supplémentaires'}) }}
+                        </div>
+
+                    </div>
+                    <div class="space-6"></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-1">
+
+
+                            <a href="{{ path('facture_index') }}" class="btn btn-white btn-info btn-block"><i
+                                        class="fa fa-reply"></i> Retour</a>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+
+
+                            <button class="btn btn-white btn-success btn-block" type="submit" formnovalidate>
+                                <i class="ace-icon fa fa-check"></i>
+                                Enregistrer
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="space"></div>
+                    {{ form_widget(form._token) }}
+
+                    {{ form_end(form , {'render_rest': false}) }}
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/jquery.collection.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#id-button-borders").change(function () {
+                if (this.checked) {
+                    $('#hs').show();
+
+                } else {
+                    $('#hs').hide();
+                }
+            });
+            var TodayDate = new Date();
+            var d = TodayDate.getDay();
+            var m = TodayDate.getMonth() + 1;
+            var y = TodayDate.getFullYear();
+
+
+            $('.spinner1').ace_spinner({
+                value: 10,
+                min: 0,
+                max: 31,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $('.my-selectors').collection({
+//                init_with_n_elements: 1,
+                add_at_the_end: true,
+                fade_in: true,
+                fade_out: true,
+
+                up: '<a href="#" class="btn btn-white btn-purple pull-right"><span class="glyphicon glyphicon-arrow-up"></span></a>',
+                down: '<a href="#" class="btn btn-white btn-primary pull-right"><span class="glyphicon glyphicon-arrow-down"></span></a>',
+                add: '<a href="#" class="btn btn-white btn-info pull-right imad"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+                remove: '<a href="#" class="btn btn-white btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>'
+            });
+
+            $('.spinner2').ace_spinner({
+                value: y,
+                min: 2000,
+                max: 2050,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $("#appbundle_facture_mois").val(m - 1);
+            $("#appbundle_facture_year").val(y);
+
+            // debut
+            var sel = $('select[name*="appbundle_facture[mission]"]').prop('selected', true);
+            // $('#adminbundle_inscription_frais').show();
+
+            var Id = sel.val();
+            var year = $("#appbundle_facture_year").val();
+            var url = Routing.generate('route_to_retrieve_mission');
+
+            /*  $.post(url,
+             { 'idClass': Id
+             }, function(data, status){
+             if(status=='200'){
+             alert("Data: " + data + "\nStatus: " + status);
+             }else {
+             alert("erreur");
+             }
+
+             });
+             */
+            $.ajax({
+                type: "POST",
+                data: {
+                    idMission: Id, year: year
+
+                }, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.data == 'mensuel') {
+
+                        $('#nbjour').hide();
+                    } else {
+
+                        $('#nbjour').show();
+                    }
+                    if (response.mois != null) {
+
+                        for (i = 0; i < response.mois.length; i++) {
+
+                            $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                        }
+                    } else {
+
+                        $(".mois option").prop('disabled', false);
+                    }
+
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    $(".mois option").each(function () {
+                        //  this.removeAttr("disabled");
+                    });
+                }
+            });
+
+            // fin
+
+            $('select[name*="appbundle_facture[mission]"]').prop('selected', true).change(function () {
+                // $('#adminbundle_inscription_frais').show();
+
+                var Id = $(this).val();
+                var year = $("#appbundle_facture_year").val();
+                var url = Routing.generate('route_to_retrieve_mission');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idMission: Id, year: year
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.data == 'mensuel') {
+
+                            $('#nbjour').hide();
+                        } else {
+
+                            $('#nbjour').show();
+                        }
+                        if (response.mois != null) {
+
+                            for (i = 0; i < response.mois.length; i++) {
+
+                                $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                            }
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $(".mois option").each(function () {
+                            //  this.removeAttr("disabled");
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

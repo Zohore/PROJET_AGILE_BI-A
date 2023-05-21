@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+
+    <title>{% block title %}Hope3k - Hope3k{% endblock %}</title>
+
+    <meta name="description" content="HOPE3K">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
+
+    {% block stylesheets %}
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}"/>
+
+
+        <!-- page specific plugin styles -->
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/imad.css" media="print"/>
+
+
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.min.css"/>
+
+
+
+
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/fonts.googleapis.com.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/fonts.googleapis.com.css"/>
+
+
+
+
+        {#<!--  <link rel="stylesheet" href="{{ asset('') }}assets/css/ace-skins.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/ace-rtl.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/main.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/Datatable.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/Datepicker.css"/>
+    -->#}
+
+
+        <script src="{{ asset('assets/js/ace-extra.min.js') }}"></script>
+
+        <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+        <style>
+            .img1 {
+
+                width: 200px;
+                /*margin-left: 50px;*/
+
+            }
+
+            .img2 {
+
+                width: 100px;
+                height: auto;
+                /*margin-right: 50px;*/
+
+            }
+
+            .div1 {
+
+                margin-top: 20px;
+            }
+
+            .div2 {
+                position: relative;
+                margin-top: 9px;
+                margin-right: 7%;
+            }
+
+            .facture {
+
+                font-size: x-large;
+            }
+
+            @media print {
+                .printt {
+                    display: none !important;
+                }
+
+                .div3 {
+                    color: yellow !important;
+                    background-color: red !important;
+                }
+            }
+
+            .aParent div {
+                float: left;
+                clear: none;
+                width: 100%;
+            }
+
+            .div4 {
+
+                float: right;
+            }
+            .header {
+                display: inline-block;
+                width: 100%;
+                /*border: 1px solid red;*/
+            }
+            .playerOne {
+                float: left;
+                border: 1px solid #090407;
+            }
+            .playerTwo {
+                float: right;
+                border: 1px solid #090407;
+            }
+            .hope3k, .client {
+
+                padding: 12px;
+            }
+        </style>
+
+
+
+    {% endblock %}
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="{{ asset('') }}assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="{{ asset('') }}assets/js/html5shiv.min.js"></script>
+    <script src="{{ asset('') }}assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="">
+
+
+<div class="div1">
+    <div class="col-md-12">
+
+        <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQFRyjYnYD3Drg/company-background_10000/0?e=2159024400&v=beta&t=RAlKPanZtaaj-QxmgPwR1edKWgyc6gHkuzuOteOPOKk"
+             alt="" class="img1 pull-left">
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg"
+             alt="" class="img2 pull-right">
+    </div>
+
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="div2 pull-right">
+    <table class="">
+        <tbody>
+        <tr>
+            <th class="facture">FACTURE</th>
+            <td></td>
+        </tr>
+        <tr>
+            <td>NUMERO</td>
+            <td>: {{ facture.etat }}</td>
+        </tr>
+
+        <tr>
+            <td>Date</td>
+            <td>: {% if facture.date %}{{ facture.date|date('Y-m-d') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="header">
+    <div class="playerOne">
+        <div class="hope3k">
+            <h3>HOPE3K SERVICES</h3>
+            <p>
+
+                Adresse : Rue francois
+            </p>
+
+            <p>
+                ICE: <b>0000000077778555</b>
+            </p>
+        </div>
+    </div>
+    <div class="playerTwo">
+        <div class="client">
+
+            <h3>CLIENT SARL</h3>
+            <p>
+
+                Adresse : Rue francoisRue francoisRue francoisRue francoisRue francoisRue francois
+            </p>
+
+            <p>
+                ICE: <b>0000000077778555</b>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="aParent">
+    <div class="div3">
+        <h3>HOPE3K SERVICES</h3>
+        <p>
+
+            Adresse : Rue francois
+        </p>
+
+        <p>
+            ICE: <b>0000000077778555</b>
+        </p>
+    </div>
+    <div class="div4">
+        <h3>CLIENT SARL</h3>
+        <p>
+
+            Adresse : Rue francois
+        </p>
+
+        <p>
+            ICE: <b>0000000077778555</b>
+        </p>
+    </div>
+
+</div>
+
+
+<table class="table table-detail">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>{{ facture.id }}</td>
+    </tr>
+    <tr>
+        <th>Etat</th>
+        <td>{{ facture.etat }}</td>
+    </tr>
+    <tr>
+        <th>Mois</th>
+        <td>{{ facture.mois }}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{% if facture.date %}{{ facture.date|date('Y-m-d') }}{% endif %}</td>
+    </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-app btn-light btn-xs printt" onclick="window.print()">
+    <i class="ace-icon fa fa-print bigger-160"></i>
+    Print
+</button>
+
+
+<!-- basic scripts -->
+{% block javascripts %}
+
+    <script src="{{ asset('') }}assets/js/jquery-2.1.4.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('') }}assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="{{ asset('') }}assets/js/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="{{ asset('') }}assets/js/pdfobject.js"></script>
+
+
+    <!-- ace scripts -->
+    <script src="{{ asset('') }}assets/js/ace-elements.min.js"></script>
+    <script src="{{ asset('') }}assets/js/ace.min.js"></script>
+{% endblock %}
+<!-- inline scripts related to this page -->
+<script src=" {{ asset('') }}assets/js/jquery-ui.custom.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="{{ asset('') }}assets/js/chosen.jquery.min.js"></script>
+
+<script src="{{ asset('') }}assets/js/spinbox.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-timepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/moment.min.js"></script>
+<script src="{{ asset('') }}assets/js/daterangepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.knob.min.js"></script>
+<script src="{{ asset('') }}assets/js/autosize.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.inputlimiter.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery-ui.min.js"></script>
+
+<script src="{{ asset('') }}assets/js/jquery.maskedinput.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-tag.min.js"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        if (!ace.vars['old_ie']) $('.date-timepicker1').datetimepicker(
+            {
+                locale: moment.locale('pt'),
+                format: 'YYYY-MM-DD HH:mm',
+                //maxDate: moment(),
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-arrows ',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+
+        $(".chosen-select").chosen();
+
+
+    });
+
+
+</script>
+</body>
+</html>
+

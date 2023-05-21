@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="web/assets/css/Style_Page_Mission_Imprimer.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/print_projet.css') }}">
+    <title>Facture N° {{ facture.numero }}</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<header class="A">
+    <p class="B">
+        <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQFRyjYnYD3Drg/company-background_10000/0?e=2159024400&v=beta&t=RAlKPanZtaaj-QxmgPwR1edKWgyc6gHkuzuOteOPOKk"
+             alt="HOP3K" width="300" height="120"/><br>
+        {# <span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span> #}
+    </p>
+    <p class="C text-center">
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA"
+             width="100"
+             height="100"/><br>
+        <span class="G text-center">ISO 9001 : 2015</span>
+        <span class="GA text-center">ID : 121497101356</span>
+    </p>
+</header>
+
+<p class="DF">
+
+    <strong class="SQ">FACTURE</strong><br>
+
+    <span class="QW">NUMÉRO &nbsp;: {{ facture.numero }}<br>
+         DATE   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {% if facture.date %}{{ facture.date|date('d-m-Y') }}{% endif %}</span>
+
+</p>
+
+<div class="row QWF ">
+
+    {% if fiche is not null %}
+        <div class="col-md-5 10 ZES2">
+
+            <h4 class="RTY">{{ fiche.nom }}</h4>
+            <p class="WXV">
+                Adresse : {{ fiche.adresse| nl2br }}
+            </p>
+            <p>
+                <span class="WXV">ICE</span> : <span class="ZEF bolder"><b>{{ fiche.ice }}</b></span>
+            </p>
+
+        </div>
+    {% else %}
+        <div class="col-md-5 10 ZES2">
+
+            <h4 class="RTY">HOP3K SERVICES</h4>
+            <p class="WXV">
+                Adresse : Rue François Ponsard, Résidence Oushmane1,<br>
+                3eme étage bureau N°16. Casablanca 20000
+            </p>
+            <p>
+                <span class="WXV">ICE</span> : <span class="ZEF bolder"><b>000077247000025</b></span>
+            </p>
+
+        </div>
+    {% endif %}
+
+
+    <div class="col-sm-5 ZES">
+        <h4 class="RTY">{{ facture.client.nom }}</h4>
+
+
+        <p>
+            <span class="XLJ">Adresse : {{ facture.client.adresse }}</span>
+        </p>
+        </p>
+        <p>
+            <span class="XLJ">ICE</span> : <span class="ERZ"><b>
+
+                    {{ facture.client.ice }}
+                </b></span>
+        </p>
+    </div>
+
+</div>
+
+
+<table class="">
+    <tr>
+        <th class="NB" width="55%"><strong>Libellé des articles</strong></th>
+        <th class="NBV" width="15%"><strong>
+                Unité
+
+            </strong></th>
+        <th class="NBV" width="15%"><strong>Prix Unitaire HT (DH)</strong></th>
+        <th class="NBV" width="15%"><strong>Prix Total HT (DH)</strong></th>
+
+    </tr>
+
+    <tr>
+
+        <td class="" style="padding: 10px">
+            <strong> <br>
+                {% for item in items %}
+
+                    <p>
+                        {{ item['ligne'].job }}
+                    </p>
+
+                {% endfor %}
+            </strong>
+            <br>
+            {% if facture.dateDebut is not null and facture.dateFin is not null %}
+                <span class="YYY">Période :
+                </span><br>
+                Du {{ facture.dateDebut | date('d/m/Y') }} Au {{ facture.dateFin | date('d/m/Y') }}
+            {% else %}
+                <span class="YYY">Mois :
+                </span><br>
+                {{ mois }}-{{ facture.year }}
+            {% endif %}
+            {% set break = false %}
+
+
+            <p>
+                <span class="YYY">Bon de commande:
+                </span><br>
+
+                {% for item in facture.bcclients %}
+                    <strong>
+                        {{ item.code~' ' }}
+                    </strong>
+                {% endfor %}
+
+
+            </p>
+
+
+        </td>
+        <td class="text-center">
+            <strong>
+                <br>
+                {% for item in items %}
+                    <p>
+                        {{ item['nbjours'] |number_format(2, ',', ' ') }}
+                    </p>
+
+                {% endfor %}
+            </strong>
+
+        </td>
+
+        <td class="text-center">
+            <strong>
+                <br>
+                {% for item in items %}
+                    <p>
+                        {{ item['tjm']| number_format(2, ',', ' ') }}
+                    </p>
+
+                {% endfor %}
+            </strong>
+        </td>
+        <td class="text-center">
+            <strong>
+                <br>
+                {% for item in items %}
+                    <p>
+                        {{ item['total']| number_format(2, ',', ' ') }}
+                    </p>
+
+                {% endfor %}
+
+            </strong>
+        </td>
+    </tr>
+
+
+</table>
+
+
+<table class="jjj " cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr class="">
+        <th class="trr AZX">Montant des sommes dues</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.totalHT | number_format(2, ',', ' ') }} DH
+        </td>
+
+    </tr>
+    <tr class="">
+        <th class="trr AZX">Montant TVA 20%</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.taxe | number_format(2, ',', ' ') }} DH
+        </td>
+
+    </tr>
+    <tr class="">
+        <th class="trr AZX">Montant net à payer au prestataire</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.totalTTC | number_format(2, ',', ' ') }} DH</td>
+
+    </tr>
+
+    </tbody>
+</table>
+{# <p class="AZX">
+
+    Montant des sommes dues &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ facture.totalHT }}
+    .00
+    DH <br>Montant TVA 20% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {{ facture.taxe }}.00
+    DH<br>Montant net à payer au prestataire &nbsp;&nbsp;{{ facture.totalTTC }}.00 DH
+
+</p> #}
+<p class="VVV">
+    Arrêté la présente facture à la somme de :<br>
+    <strong>
+        <span class="XWWO" id="montant">
+         {{ facture.totalLettre }}
+        </span>
+    </strong>
+</p>
+
+<p class="ljj1">
+    Signature et Cachet
+</p>
+<p class="WWM1">
+    <span class="XXX">Mode de paiement</span> <span class="CCC">:</span><br><span
+            class="EEE">Virement au compte bancaire</span><br>
+
+    {% if facture.comptebancaire %}
+        <span class="EEE">
+        RIB N°: {{ facture.comptebancaire.rib }}<br>
+        Ouvert à {{ facture.comptebancaire.banque }}
+            {% if facture.comptebancaire.agence != '' %}
+                Agence {{ facture.comptebancaire.agence }}
+            {% endif %}
+            - {{ facture.comptebancaire.label }}
+
+    </span>
+    {% endif %}
+</p>
+<br>
+<br>
+<div class="row" id="footer3">
+
+    <div class="col-md-10 col-md-offset-1">
+        <footer>
+            {% if fiche is not null %}
+
+
+                <p class="RRR text-center" style="border-top: solid #e9ecef 1px">
+                    SOCIETE <span class="WII">{{ fiche.nom }}</span>, &nbsp;au capital
+                    de {{ fiche.capital }} DH -
+                    {{ fiche.adresse }}. CNSS N°{{ fiche.cnss }} - RC N°{{ fiche.rc }} - IF N°3383481 - Patente N°
+                    {{ fiche.patente }}
+                    - ICE N°{{ fiche.ice }} - RIB N° {{ fiche.rib }} -
+                    Tél:0522990120
+                </p>
+
+            {% else %}
+
+                <p class="RRR text-center">
+                    SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de 700 000 DH -
+                    Lotissement
+                    Lina, &nbsp;316,
+                    3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 - Patente N°
+                    {{ fiche.patente }}
+                    -ICE
+                    N°000077247000025 - RIB N° 013780011400017840019248 -
+                    Tél:0522990120
+                </p>
+
+            {% endif %}
+
+
+        </footer>
+
+    </div>
+</div>
+
+<div class="TTT">
+    <button class="btn btn-info" onclick="window.print()" id="vusz"><span class="fa fa-print"
+                                                                          id="print"></span> Imprimer
+    </button>
+</div>
+<script type="application/javascript">
+
+    $(document).ready(function () {
+        var text = $("#total1").text();
+        var text2 = $("#dh").text();
+        $('#print').click();
+//        var text3 = $("#total").text();
+
+        $('#total').val(text);
+        $('#total2').val(text2);
+        $("#total").blur(function () {
+            var textt = $("#total").val();
+
+            $("#total1").text(textt);
+
+//
+        });
+        $("#total2").blur(function () {
+            var texttt = $("#total2").val();
+            $("#dh").text(texttt);
+//            window.print();
+
+//            $('#print').click();
+        });
+
+
+    });
+
+
+</script>
+</body>
+</html>

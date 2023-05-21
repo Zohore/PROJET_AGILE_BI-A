@@ -1,0 +1,1619 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | facture | {{ facture.numero }}{% endblock %}{% block menu %}  <a
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    {{ facture.numero }} {% endblock %}{% block content %}
+
+
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="space-6"></div>
+
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-large">
+                        <h3 class="widget-title grey lighter">
+                            <i class="ace-icon fa fa-money blue"></i>
+                            {% if facture.avoir != 1 %}
+                                Facture
+                            {% else %}
+                                Avoir
+                            {% endif %}
+                        </h3>
+
+                        <div class="widget-toolbar no-border invoice-info">
+                            <span class="invoice-info-label">Numéro:</span>
+                            <span class="red">{{ facture.numero }}</span>
+
+                            <br>
+                            <span class="invoice-info-label">Date:</span>
+                            <span class="blue">{% if facture.date %}{{ facture.date|date('d-m-Y') }}{% endif %}</span>
+
+
+                        </div>
+
+
+                        {% if facture.mission is not null and facture.nbjour > 0 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% if facture.mission is not null and facture.nbjour == 0 and facture.devise ==0 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print_hs', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+
+                        {% endif %}
+                        {% if facture.mission is not null and facture.nbjour == 0 and facture.devise ==1 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if facture.projet is not null %}
+
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print_projet', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-24">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
+                                            <b>HOP3K SERVICES</b>
+                                        </div>
+                                    </div>
+
+                                    <div>
+
+                                        {% if fiche is not null %}
+                                            <ul class="list-unstyled spaced">
+                                                <li>
+                                                    <i class="ace-icon fa fa-map-marker blue"></i>{{ fiche.adresse }}
+                                                </li>
+
+
+                                                <li>
+                                                    <i class="ace-icon fa fa-phone blue"></i>
+                                                    Phone:
+                                                    <b class="red">+212522990120</b>
+                                                </li>
+
+                                                <li class="divider"></li>
+
+                                                <li>
+                                                    <i class="ace-icon fa fa-caret-right blue"></i>
+                                                    ICE : {{ fiche.ice }}
+                                                </li>
+                                            </ul>
+                                        {% else %}
+                                            <ul class="list-unstyled spaced">
+                                                <li>
+                                                    <i class="ace-icon fa fa-map-marker blue"></i>Rue François Ponsard,
+                                                    Résidence Oushmane1,<br>
+                                                    3eme étage bureau N°16. Casablanca 20000
+                                                </li>
+
+
+                                                <li>
+                                                    <i class="ace-icon fa fa-phone blue"></i>
+                                                    Phone:
+                                                    <b class="red">+212522990120</b>
+                                                </li>
+
+                                                <li class="divider"></li>
+
+                                                <li>
+                                                    <i class="ace-icon fa fa-caret-right blue"></i>
+                                                    ICE : 000077247000025
+                                                </li>
+                                            </ul>
+
+
+                                        {% endif %}
+
+
+                                    </div>
+                                </div><!-- /.col -->
+
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
+                                            <b>{{ facture.client.nom }}</b>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <ul class="list-unstyled  spaced">
+                                            <li>
+                                                <i class="ace-icon fa fa-map-marker green"></i>{{ facture.client.adresse }}
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-phone green"></i>
+                                                Phone:
+                                                <b class="black">{{ facture.client.tel }}</b>
+                                            </li>
+
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right green"></i>
+                                                ICE : {{ facture.client.ice }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.col -->
+                            </div><!-- /.row -->
+
+                            <div class="space"></div>
+
+                            <div>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+
+                                        <th class="center">Désignation</th>
+                                        <th class="center">
+                                            Unité
+                                        </th>
+                                        <th class="center">Prix Unitaire HT (DH)</th>
+                                        <th class="center">Prix Total HT (DH)</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>
+
+
+                                            {% if facture.client.nom == "ATOS" and facture.mission is not null %}
+                                                <p>
+
+
+                                                 <span class="PPP">Type de mission :
+                                                     {{ facture.mission.type }}
+                                                     <br>
+
+
+                                                                     </span>
+                                                </p>
+                                            {% endif %}
+                                            <p>
+                                                &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+                                            </p>
+                                            <p>
+                                                &nbsp;&nbsp;<span class="OLL">
+                                                    {% if facture.mission.job is defined and facture.mission.job is not null %}
+
+                                                        {{ facture.mission.job.nom }}
+
+                                                    {% else %}
+
+
+                                                    {% endif %}
+
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="YYY"><u>Consultant :</u></span><br>
+                                                <span class="NBt OLL">
+
+                                                    {% if facture.consultant is null %}
+                                                        --
+
+                                                    {% else %}
+                                                        {{ facture.consultant }}
+                                                    {% endif %}
+                                                    &nbsp;</span>
+
+                                            </p>
+
+
+                                            <p>
+                                                &nbsp;&nbsp;<span class="YYY"><u>Mois :</u></span><br><span
+                                                        class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
+                                                {% if facture.facturehsups | length != 0 %}
+
+
+                                                    {% for heure in facture.facturehsups %}
+                                                        <br>  <span class="OLL">
+                                                            {% if heure.bcfournisseur is null %}
+                                                                ({{ heure.nbheure }}H) - {{ heure.heuresup }} / {{ heure.totalHT }}DH
+                                                            {% endif %}
+                                                        </span>
+
+                                                    {% endfor %}
+
+                                                {% endif %}
+
+                                            </p>
+                                            {% if facture.avoir != 1 %}
+
+                                                {% if facture.client.nom == 'Société Générale – African Business Services' %}
+                                                    {% if facture.bcclients | length > 0 %}
+                                                        <p>
+                                                            <span class="YYY">Référence des contrats :</span><br>
+
+
+                                                            {% if facture.bcclients| last.ncontrat !='' %}
+
+                                                                <span class="OLL bolder">{{ facture.bcclients| last.ncontrat }}</span>
+                                                                <br>
+                                                            {% endif %}
+                                                            {% if facture.bcclients| last.code != "" %}
+                                                                <span class="OLL bolder">Cadre: {{ facture.bcclients| last.code }}</span>
+                                                                <br>
+
+
+                                                            {% endif %}
+                                                            {% if facture.bcclients| last.application != "" %}
+                                                                <span class="OLL bolder">Application: {{ facture.bcclients| last.application }}</span>
+                                                                <br>
+
+
+
+                                                            {% endif %}
+                                                            {% if facture.bcclients| last.avenant != "" %}
+                                                                <span class="OLL">Avenant: {{ facture.bcclients| last.avenant }}</span>
+
+
+
+                                                            {% endif %}
+
+
+                                                        </p>
+                                                    {% endif %}
+
+
+                                                {% else %}
+                                                    {% if facture.bcclients | length > 0 %}
+                                                        <p>
+                                                            {% if facture.bcclients | last.ncontrat !='' %}
+
+                                                                <span class="YYY">Référence de contrat</span><br>
+
+
+                                                                <span
+                                                                        class="OLL bolder">{{ facture.bcclients | last.ncontrat }}
+
+                            </span>
+                                                                <br>
+
+                                                            {% endif %}
+
+                                                            {% if facture.bcclients| last.code != "" %}
+
+                                                                <span class="YYY">N° Bon de commande </span><br>
+
+                                                                {% for bcclient in facture.bcclients %}
+
+                                                                    <span
+                                                                            class="OLL bolder">{{ bcclient.code }} </span>
+
+                                                                {% endfor %}
+
+                                                            {% endif %}
+                                                            {% if facture.bcclients| last.application != "" %}
+
+                                                                <span class="YYY">Application </span><br>
+
+
+                                                                <span class="OLL bolder">{{ facture.bcclients| last.application }}
+                                </span>
+                                                                <br>
+
+
+
+                                                            {% endif %}
+                                                            {% if facture.bcclients|last.avenant!= "" %}
+
+                                                                <span class="YYY"> Avenant</span><br>
+
+
+                                                                <span class="OLL">{{ facture.bcclients|last.avenant }}</span>
+
+
+
+                                                            {% endif %}
+
+
+                                                        </p>
+
+
+                                                    {% endif %}
+
+                                                {% endif %}
+                                            {% else %}
+                                                {% if facture.client.nom == 'Société Générale – African Business Services' %}
+                                                    {% if facture.facture.bcclients | length > 0 %}
+                                                        <p>
+                                                            <span class="YYY">Référence des contrats :</span><br>
+
+
+                                                            {% if facture.facture.bcclients| last.ncontrat !='' %}
+
+                                                                <span class="OLL bolder">{{ facture.facture.bcclients| last.ncontrat }}</span>
+                                                                <br>
+                                                            {% endif %}
+                                                            {% if facture.facture.bcclients| last.code != "" %}
+                                                                <span class="OLL bolder">Cadre: {{ facture.facture.bcclients| last.code }}</span>
+                                                                <br>
+
+
+                                                            {% endif %}
+                                                            {% if facture.facture.bcclients| last.application != "" %}
+                                                                <span class="OLL bolder">Application: {{ facture.facture.bcclients| last.application }}</span>
+                                                                <br>
+
+
+
+                                                            {% endif %}
+                                                            {% if facture.facture.bcclients| last.avenant != "" %}
+                                                                <span class="OLL">Avenant: {{ facture.facture.bcclients| last.avenant }}</span>
+
+
+
+                                                            {% endif %}
+
+
+                                                        </p>
+                                                    {% endif %}
+
+
+                                                {% else %}
+                                                    {% if facture.facture.bcclients | length > 0 %}
+                                                        <p>
+                                                            {% if facture.facture.bcclients | last.ncontrat !='' %}
+
+                                                                <span class="YYY">Référence de contrat</span><br>
+
+
+                                                                <span
+                                                                        class="OLL bolder">{{ facture.facture.bcclients | last.ncontrat }}
+
+                            </span>
+                                                                <br>
+
+                                                            {% endif %}
+
+                                                            {% if facture.facture.bcclients| last.code != "" %}
+
+                                                                <span class="YYY">N° Bon de commande </span><br>
+
+                                                                {% for bcclient in facture.facture.bcclients %}
+
+                                                                    <span
+                                                                            class="OLL bolder">{{ bcclient.code }} </span>
+
+                                                                {% endfor %}
+
+                                                            {% endif %}
+                                                            {% if facture.facture.bcclients| last.application != "" %}
+
+                                                                <span class="YYY">Application </span><br>
+
+
+                                                                <span class="OLL bolder">{{ facture.facture.bcclients| last.application }}
+                                </span>
+                                                                <br>
+
+
+
+                                                            {% endif %}
+                                                            {% if facture.facture.bcclients|last.avenant!= "" %}
+
+                                                                <span class="YYY"> Avenant</span><br>
+
+
+                                                                <span class="OLL">{{ facture.facture.bcclients|last.avenant }}</span>
+
+
+
+                                                            {% endif %}
+
+
+                                                        </p>
+
+
+                                                    {% endif %}
+
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            {% if facture.mission is not null and facture.mission.type == 'mensuel' %}
+                                                1
+                                            {% else %}
+                                                {{ facture.nbjour }}
+
+                                            {% endif %}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br> <br> <br> 1
+                                            {% endif %}
+                                        </td>
+                                        <td class=" center  align-middle">
+                                            {{ facture.mission.prixVente }}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br><br> <br>
+                                                {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="center  align-middle">
+                                            {{ facture.mission.prixVente*facture.nbjour }}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br><br><br>
+                                                {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
+                                            {% endif %}
+
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="hr hr8 hr-double hr-dotted"></div>
+
+                            <div class="row">
+                                <div class="col-sm-5 pull-right">
+                                    <h4 class="">
+                                        Total HT :
+                                        <span class="red">{{ facture.totalHT }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
+                                    </h4>
+
+                                    <h4 class="">
+                                        Taxe :
+                                        <span class="red">{{ facture.taxe }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
+                                    </h4>
+                                    <br>
+                                    <h4 class="pull-right">
+                                        Total TTC :
+                                        <span class="red">{{ facture.totalTTC }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
+                                    </h4>
+                                </div>
+                                <div class="col-sm-7 pull-left">
+                                    <div class="space-6"></div>
+                                    <p class="VVV">
+                                        Arrêté la présente facture à la somme de :<br>
+
+                                        <strong>
+                                            {{ facture.totalLettre }}
+                                        </strong>
+                                    </p></div>
+                            </div>
+
+
+                            <hr>
+                            <div class="space-6"></div>
+                            <div class="well">
+
+                                {% if fiche is not null %}
+                                    <p class="RRR text-center">
+                                        SOCIETE <span class="WII">&nbsp; <b>{{ fiche.nom }}</b></span>, &nbsp;au capital
+                                        de {{ fiche.capital }} DH -
+                                        {{ fiche.adresse }}. CNSS N°{{ fiche.cnss }} - RC N°{{ fiche.rc }} - IF
+                                        N°3383481 - Patente N° {{ fiche.patente }}
+                                        -ICE
+                                        N°{{ fiche.ice }} - RIB N° {{ fiche.rib }} -
+                                        Tél:0522990120
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="RRR text-center">
+                                        SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital
+                                        de
+                                        700 000 DH -
+                                        Lotissement
+                                        Lina, &nbsp;316,
+                                        3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF
+                                        N°3383481 -
+                                        Patente N° 1872656789135222222222245
+                                        -ICE
+                                        N°000077247000025 - RIB N° 013780011400017840019248 -
+                                        Tél:0522990120
+                                    </p>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div>
+    <center>
+        <div class="hidden-sm hidden-xs action-buttons">
+
+            {% if facture.documentName is null %}
+                <a class="red"
+                   href="{{ path('facture_sheet', { 'id': facture.id }) }}"
+                   title="Uploader le timesheet">
+                    <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+                </a>
+            {% else %}
+                <a title="Télécharger le Timesheet" class="purple"
+                   href="{{ asset('uploads/documents/')~facture.documentName }}">
+                    Télécharger TS <i class="ace-icon fa fa-download bigger-130"></i>
+                </a>
+            {% endif %}
+
+            {% if facture.mission is not null and facture.nbjour > 0 %}
+                <a class="grey"
+                   href="{{ path('facture_print', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                    Imprimer <i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+                <a class="brown"
+                   href="{{ path('facture_edit_date', { 'id': facture.id }) }}"
+                   title="Modifier les dates">
+                    Modifier les dates <i class="ace-icon fa fa-calendar bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.mission is not null and facture.nbjour == 0 %}
+                <a class="grey"
+                   href="{{ path('facture_print_hs', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                    Imprimer<i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.projet is not null %}
+                <a class="grey"
+                   href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                    Imprimer <i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.etat !='payé' %}
+
+                <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                   onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
+                   class="tooltip-error" data-rel="tooltip"
+                   title="" id=""
+                   data-original-title="-> DH">
+																				<span class="green">
+																				Marquer comme payé	<i
+                                                                                            class="ace-icon fa fa-check-square bigger-120"></i>
+																				</span>
+                </a>
+
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
+                {% if facture.projet is null and facture.etat != 'payé' %}
+
+                    {% if facture.facturehsups | length != 0 %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_hs', { 'id': facture.id }) }}"
+                           title="modifier">
+                            Modifier <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+                    {% else %}
+                        <a class="orange"
+                           href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                           title="modifier">
+                            Modifier <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                           title="modifier">
+                            Modifier <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+
+                    {% endif %}
+                    {% if facture.client =='PCS invest' and facture.etat != 'payé' %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                           title="modifier">
+                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+
+                    {% endif %}
+
+                {% endif %}
+                {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
+
+                    <a href="#my-moda{{ facture.id }}" role="button"
+                       class=""
+                       data-toggle="modal">
+                        <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                    </a>
+                    <div id="my-moda{{ facture.id }}" class="modal fade"
+                         tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close"
+                                            data-dismiss="modal"
+                                            aria-hidden="true">&times;
+                                    </button>
+                                    <h3 class="smaller lighter blue no-margin">
+                                        {{ facture.totalTTC }} {{ facture.mission.devise }}
+                                        -> DH </h3>
+                                </div>
+
+                                <div class="modal-body">
+
+
+                                    <input type="hidden"
+                                           id="id_val{{ facture.id }}"
+                                           value="{{ facture.id }}"
+                                           class="form-control">
+                                    <input type="text"
+                                           id="montant{{ facture.id }}"
+                                           placeholder="Total en DH"
+                                           class="form-control">
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-success ok pull-right"
+                                            id="{{ facture.id }}">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Enregistrer
+                                    </button>
+                                    <button class="btn btn-sm btn-danger pull-left"
+                                            data-dismiss="modal">
+                                        <i class="ace-icon fa fa-times"></i>
+                                        Close
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div>
+
+
+                {% endif %}
+
+            {% endif %}
+
+            <div class="hidden-md hidden-lg">
+                <div class="inline pos-rel">
+                    <button class="btn btn-minier btn-yellow dropdown-toggle"
+                            data-toggle="dropdown"
+                            data-position="auto">
+                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" class="tooltip-info"
+                               data-rel="tooltip"
+                               title=""
+                               data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="tooltip-success"
+                               data-rel="tooltip" title=""
+                               data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                            </a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li>
+                                <a href="{{ path('facture_remove', { 'id': facture.id }) }}"
+                                   class="tooltip-error" data-rel="tooltip"
+                                   title=""
+                                   data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                </a>
+                            </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </center>
+    <hr>
+    <div class="row">
+
+        <div class="col-md-12 widget-container-col ui-sortable" id="widget-container-col-10">
+            <div class="widget-box ui-sortable-handle" id="widget-box-10">
+                <div class="widget-header widget-header-small">
+                    <h5 class="widget-title smaller">Détails</h5>
+
+                    <div class="widget-toolbar no-border">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home" aria-expanded="true">Bc fournisseurs</a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#profile" aria-expanded="false">Factures fournisseurs</a>
+                            </li>
+
+
+                            <li class="">
+                                <a data-toggle="tab" href="#prod" aria-expanded="false">Productions</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#bcclient" aria-expanded="false">Bc Clients</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main padding-6">
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane active">
+                                {% if facture.bcfournisseurs | length == 0 %}
+                                    <div class="alert alert-info text-center">
+                                        Aucun Bc fournisseur pour cette facture !
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+                                            <div class="clearfix">
+                                                <div class="pull-right tableTools-container">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- div.table-responsive -->
+
+                                            <!-- div.dataTables_borderWrap -->
+                                            <div>
+                                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                                    <table id="dynamic-table"
+                                                           class="table table-striped table-bordered table-hover dataTable no-footer text-center"
+                                                           role="grid" aria-describedby="dynamic-table_info">
+                                                        <thead style="font-weight: bold;">
+                                                        <tr role="row">
+
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1" style="color: #707070;"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Réference
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Fournisseur
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                consultant
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                date
+                                                            </th>
+
+
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Mois
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                nb jours
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                TJM
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Achat HT
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Achat TTC
+                                                            </th>
+
+
+                                                            <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                                aria-label=""></th>
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        {% for bcfournisseur in facture.bcfournisseurs %}
+
+                                                            <tr role="row" class="odd">
+
+
+                                                                <td>
+
+
+                                                                    #{{ bcfournisseur.code }}
+
+
+                                                                </td>
+
+                                                                <td>
+                                                                    {% if bcfournisseur.fournisseur is null %}
+                                                                        --
+
+                                                                    {% else %}
+
+                                                                        {{ bcfournisseur.fournisseur }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+
+                                                                    {% if bcfournisseur.consultant is null %}
+
+
+                                                                    {% else %}
+
+                                                                        {{ bcfournisseur.consultant }}
+
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+
+
+                                                                <td class="hidden-480">
+                                                                    {% if bcfournisseur.date is null %}
+                                                                        --
+                                                                    {% else %}
+                                                                        {{ bcfournisseur.date|date('Y-m-d') }}
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+                                                                <td>
+                                                                    {% if bcfournisseur.mois is null %}
+                                                                        --
+
+                                                                    {% else %}
+
+                                                                        {{ bcfournisseur.mois }}/{{ bcfournisseur.year }}
+
+
+                                                                    {% endif %}
+
+                                                                </td>
+
+                                                                <td class="hidden-480">
+                                                                    {% if bcfournisseur.nbjours is null %}
+                                                                        --
+                                                                    {% else %}
+                                                                        {{ bcfournisseur.nbjours }}
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+                                                                <td class="hidden-480">
+                                                                    {% if bcfournisseur.mission is null %}
+
+                                                                        {% if bcfournisseur.projet %}
+                                                                            {% if bcfournisseur.nbjours != 0 %}
+                                                                                {% set tjm = bcfournisseur.achatHT/bcfournisseur.nbjours %}
+                                                                                {{ tjm | number_format(2, ',', ' ') }}
+                                                                            {% endif %}
+                                                                        {% else %}
+
+                                                                            --
+                                                                        {% endif %}
+
+                                                                    {% else %}
+                                                                        {{ bcfournisseur.mission.prixAchat }}
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+                                                                <td>
+                                                                    {% if bcfournisseur.achatHT is null %}
+                                                                        --
+
+                                                                    {% else %}
+
+                                                                        {{ bcfournisseur.achatHT }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {% if bcfournisseur.achatTTC is null %}
+                                                                        --
+
+                                                                    {% else %}
+
+                                                                        {{ bcfournisseur.achatTTC }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+
+
+                                                                <td>
+                                                                    <div class="hidden-sm hidden-xs action-buttons">
+                                                                        <a class="blue"
+                                                                           href="{{ path('bcfournisseur_show', { 'id': bcfournisseur.id }) }}"
+                                                                           title="voir">
+                                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                                        </a>
+
+                                                                        <a class="orange"
+                                                                           href="{{ path('bcfournisseur_edit', { 'id': bcfournisseur.id }) }}"
+                                                                           title="modifier">
+                                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                        </a>
+                                                                        <a class="orange"
+                                                                           href="{{ path('bcfournisseur_print', { 'id': bcfournisseur.id }) }}"
+                                                                           title="imprimer">
+                                                                            <i class="ace-icon fa fa-print bigger-130"></i>
+                                                                        </a>
+
+
+                                                                    </div>
+
+                                                                    <div class="hidden-md hidden-lg">
+                                                                        <div class="inline pos-rel">
+                                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                                                    data-toggle="dropdown"
+                                                                                    data-position="auto">
+                                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                                            </button>
+
+                                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-info"
+                                                                                       data-rel="tooltip"
+                                                                                       title=""
+                                                                                       data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-success"
+                                                                                       data-rel="tooltip" title=""
+                                                                                       data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-error"
+                                                                                       data-rel="tooltip"
+                                                                                       title=""
+                                                                                       data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div id="profile" class="tab-pane">
+                                {% if facture.facturefournisseurs | length == 0 %}
+                                    <div class="alert alert-info text-center">
+                                        Aucune Facture fournisseur pour cette facture !
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+
+                                            <div>
+                                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                                    <table id="dynamic-table"
+                                                           class="table table-striped table-bordered table-hover dataTable no-footer text-center"
+                                                           role="grid" aria-describedby="dynamic-table_info">
+                                                        <thead style="font-weight: bold;">
+                                                        <tr role="row">
+
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table" rowspan="1"
+                                                                colspan="1" style="color: #707070;"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Réference
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Fournisseur
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                consultant
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                date
+                                                            </th>
+
+
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Mois
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                nb jours
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Achat HT
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Achat TTC
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Etat
+                                                            </th>
+
+
+                                                            <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                                aria-label=""></th>
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        {% for facturefournisseur in facture.facturefournisseurs %}
+
+                                                            <tr role="row" class="odd">
+
+
+                                                                <td>
+
+
+                                                                    {{ facturefournisseur.numero }}
+
+
+                                                                </td>
+
+                                                                <td>
+                                                                    {% if facturefournisseur.fournisseur is null %}
+
+
+                                                                    {% else %}
+
+                                                                        {{ facturefournisseur.fournisseur }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+
+                                                                    {% if facturefournisseur.consultant is null %}
+
+
+                                                                    {% else %}
+
+                                                                        {{ facturefournisseur.consultant }}
+
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+
+
+                                                                <td class="hidden-480">
+                                                                    {% if facturefournisseur.date is null %}
+
+                                                                    {% else %}
+                                                                        {{ facturefournisseur.date|date('Y-m-d') }}
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+                                                                <td>
+                                                                    {% if facturefournisseur.mois is null %}
+
+
+                                                                    {% else %}
+
+                                                                        {{ facturefournisseur.mois }}/{{ facturefournisseur.year }}
+
+
+                                                                    {% endif %}
+
+                                                                </td>
+
+                                                                <td class="hidden-480">
+                                                                    {% if facturefournisseur.nbjours is null %}
+
+                                                                    {% else %}
+                                                                        {{ facturefournisseur.nbjours }}
+
+                                                                    {% endif %}
+
+
+                                                                </td>
+                                                                <td>
+                                                                    {% if facturefournisseur.achatHT is null %}
+
+
+                                                                    {% else %}
+
+                                                                        {{ facturefournisseur.achatHT | number_format(2, '.', '') }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {% if facturefournisseur.achatTTC is null %}
+                                                                        --
+
+                                                                    {% else %}
+
+                                                                        {{ facturefournisseur.achatTTC | number_format(2, '.', '') }}
+
+
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {{ facturefournisseur.etat }}
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <div class="hidden-sm hidden-xs action-buttons">
+                                                                        <a class="blue"
+                                                                           href="{{ path('facturefournisseur_show', { 'id': facturefournisseur.id }) }}"
+                                                                           title="voir">
+                                                                            <i class="ace-icon fa fa-search-plus bigger-160"></i>
+                                                                        </a>
+                                                                        {% if is_granted('ROLE_MANAGER') %}
+                                                                            <a class="orange"
+                                                                               href="{{ path('facturefournisseur_edit', { 'id': facturefournisseur.id }) }}"
+                                                                               title="modifier">
+                                                                                <i class="ace-icon fa fa-pencil bigger-160"></i>
+                                                                            </a>
+                                                                        {% endif %}
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="hidden-md hidden-lg">
+                                                                        <div class="inline pos-rel">
+                                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                                                    data-toggle="dropdown"
+                                                                                    data-position="auto">
+                                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                                            </button>
+
+                                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-info"
+                                                                                       data-rel="tooltip"
+                                                                                       title=""
+                                                                                       data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-success"
+                                                                                       data-rel="tooltip" title=""
+                                                                                       data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a href="#" class="tooltip-error"
+                                                                                       data-rel="tooltip"
+                                                                                       title=""
+                                                                                       data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+
+                                                        </tbody>
+
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div id="prod" class="tab-pane">
+                                {% if facture.productions | length == 0 %}
+                                    <div class="alert alert-info text-center">
+                                        Aucune Production pour cette facture !
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+                                            <div class="clearfix">
+                                                <div class="pull-right tableTools-container">
+                                                </div>
+                                            </div>
+                                            <div class="table-header">
+
+
+                                            </div>
+
+                                            <!-- div.table-responsive -->
+
+                                            <!-- div.dataTables_borderWrap -->
+                                            <div>
+                                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                                    <table id="dynamic-table"
+                                                           class="table table-striped table-bordered table-hover dataTable no-footer text-center"
+                                                           role="grid" aria-describedby="dynamic-table_info">
+                                                        <thead style="font-weight: bold;">
+                                                        <tr role="row">
+
+
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Consultant
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="dynamic-table" rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Domain: activate to sort column ascending">
+                                                                Projet
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                Mission
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                Client
+                                                            </th>
+                                                            <th class="sorting_desc" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Price: activate to sort column ascending"
+                                                                aria-sort="descending">
+                                                                Fournisseur
+                                                            </th>
+
+
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                TJM Vente
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                TJM Achat
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Mois
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                NB jours
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Vente HT
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                Achat HT
+                                                            </th>
+                                                            <th class="hidden-480 sorting" tabindex="0"
+                                                                aria-controls="dynamic-table"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Status: activate to sort column ascending">
+                                                                N Facture
+                                                            </th>
+                                                            <th></th>
+
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        {% for production in facture.productions %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ production.consultant }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ production.projet }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ production.mission }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ production.client }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ production.fournisseur }}
+                                                                </td>
+                                                                <td>{{ production.tjmVente }}</td>
+                                                                <td>{{ production.tjmAchat }}</td>
+                                                                <td>{{ production.mois }}/{{ production.year }}</td>
+                                                                <td>{{ production.nbjour }}</td>
+                                                                <td>{{ production.venteHT }}</td>
+                                                                <td>{{ production.achatHT }}</td>
+                                                                <td>{{ production.facture }}</td>
+                                                                <td>
+
+                                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                                        <a href="{{ path('production_edit', { 'id': production.id }) }}"
+                                                                           class="btn btn-white btn-warning btn-sm"><i
+                                                                                    class="fa fa-edit"></i> modifier</a>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+
+
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div id="bcclient" class="tab-pane">
+                                {% if facture.bcclients | length == 0 %}
+                                    <div class="alert alert-info text-center">
+                                        Aucune Bc pour cette facture !
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+                                            <div class="clearfix">
+                                                <div class="pull-right tableTools-container">
+                                                </div>
+                                            </div>
+                                            <div class="table-header">
+
+
+                                            </div>
+
+                                            <!-- div.table-responsive -->
+
+                                            <!-- div.dataTables_borderWrap -->
+                                            <div>
+                                                <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
+                                                    <table class="table table-striped table-bordered table-hover dataTable no-footer text-center">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Code</th>
+                                                            <th>Date</th>
+                                                            <th>Consultant</th>
+                                                            <th>Client</th>
+                                                            <th>Nbjrs</th>
+                                                            <th>Nbjrsr</th>
+                                                            <th>N° Contrat</th>
+                                                            <th>Application</th>
+                                                            <th>Avenant</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for bcclient in facture.bcclients %}
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">{{ bcclient.id }}</a>
+                                                                </td>
+                                                                <td>{{ bcclient.code }}</td>
+                                                                <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
+                                                                <td>{{ bcclient.consultant }}</td>
+                                                                <td>{{ bcclient.client }}</td>
+                                                                <td>{{ bcclient.nbJrs }}</td>
+                                                                <td>{{ bcclient.nbJrsR }}</td>
+                                                                <td>{{ bcclient.ncontrat }}</td>
+                                                                <td>{{ bcclient.application }}</td>
+                                                                <td>{{ bcclient.avenant }}</td>
+                                                                <td class="center">
+                                                                    <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}"><i
+                                                                                class="icon-menu fa fa-search-plus blue bigger-140"></i></a>
+
+                                                                    <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}"><i
+                                                                                class="icon-menu fa fa-edit orange bigger-140"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
