@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+        <style type="text/css">
+
+            fieldset fieldset {
+
+                background: rgba(255, 255, 255, 1);
+                background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+                background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);
+
+            }
+            fieldset[id*='_projetconsultants_'] {
+                border: 1px solid black;
+
+            }
+
+            .inl .form-group.form-group {
+
+                float: left;
+                display: inline;
+                padding: 5px;
+
+            }
+        </style>
+    {% endblock %}
+
+{% block title %} Hope3k |facture Heures sup {% endblock %}{% block menu %}  <a
+        href="{{ path('projet_index') }}">Heures Sup</a>   {% endblock %}
+{% block menu_active %}    Ajouter {% endblock %}
+{% block content1 %}
+    <h1>Facturehsup creation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('facturehsup_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
